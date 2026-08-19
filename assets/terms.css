@@ -1,0 +1,195 @@
+/* ---------- SUB HEADER ---------- */
+
+.sub-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 24px 30px;
+  background: var(--row-light);
+}
+
+.terms-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #1f75fe;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.sub-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: var(--white);
+}
+
+.sub-desc {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.35px;
+  color: var(--gray-muted);
+}
+
+/* ---------- POLICY CONTENT ---------- */
+
+.policy-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  padding: 40px 30px;
+}
+
+.policy-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--white);
+  border: 1px solid #e2e8f0;
+}
+
+.policy-card--required {
+  border-color: var(--teal-200);
+}
+
+.policy-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.policy-card-title {
+  flex: 1 0 0;
+  margin: 0;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
+  color: var(--row-light);
+}
+
+.required-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--teal-200);
+  color: #0b192c;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.policy-card-body {
+  width: 100%;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: -0.325px;
+  color: #475569;
+}
+
+.policy-card-body p {
+  margin: 0;
+}
+
+/* ---------- CONSENT ---------- */
+
+.terms-consent {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.terms-consent-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.terms-consent-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1.5px solid #80808c;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.terms-consent-box img {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+}
+
+.terms-consent-checkbox:checked ~ .terms-consent-box {
+  background: var(--pin);
+  border-color: var(--pin);
+}
+
+.terms-consent-checkbox:checked ~ .terms-consent-box img {
+  opacity: 1;
+}
+
+.terms-consent-checkbox:focus-visible ~ .terms-consent-box {
+  outline: 2px solid var(--teal-200);
+  outline-offset: 2px;
+}
+
+.terms-consent-text {
+  flex: 1 0 0;
+  font-weight: 400;
+  font-size: 13px;
+  color: #d9d9e0;
+}
+
+/* ---------- ALERT NOTE ---------- */
+
+.terms-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.terms-alert-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+}
+
+.terms-alert-text {
+  flex: 1 0 0;
+  margin: 0;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #64748b;
+}

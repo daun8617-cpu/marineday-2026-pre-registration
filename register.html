@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>사전등록 | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 사전등록 신청 폼" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/style.css" />
+<link rel="stylesheet" href="assets/register.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="reg-header">
+    <a class="back-button" href="index.html" aria-label="뒤로 가기">
+      <img src="assets/arrow-left.svg" alt="" />
+    </a>
+    <p class="reg-header-title">사전등록</p>
+    <span class="reg-header-spacer" aria-hidden="true"></span>
+  </header>
+
+  <form class="reg-form" id="reg-form" novalidate>
+    <div class="reg-intro">
+      <span class="badge">PRE-REGISTRATION</span>
+      <h1 class="reg-title">마린데이 2026 사전등록</h1>
+    </div>
+
+    <div class="reg-fields">
+      <div class="field">
+        <label class="field-label" for="f-name">이름</label>
+        <input class="field-input" id="f-name" name="name" type="text" placeholder="김마린" autocomplete="name" required />
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-phone">연락처</label>
+        <input class="field-input" id="f-phone" name="phone" type="tel" placeholder="01012345678" autocomplete="tel" pattern="[0-9\-]{9,13}" required />
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-email">이메일</label>
+        <input class="field-input" id="f-email" name="email" type="email" placeholder="marine.kim@ocean.com" autocomplete="email" required />
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="f-org">소속 기관 / 회사 <span class="field-optional">(선택)</span></label>
+        <input class="field-input" id="f-org" name="org" type="text" placeholder="소속을 입력해 주세요" autocomplete="organization" />
+      </div>
+    </div>
+
+    <label class="consent">
+      <input class="consent-checkbox" type="checkbox" name="consent" required />
+      <span class="consent-box"><img src="assets/check.svg" alt="" /></span>
+      <span class="consent-text">개인정보 수집 및 이용 동의 <span class="consent-required">(필수)</span></span>
+      <a class="consent-view" href="terms.html">보기</a>
+    </label>
+
+    <div class="reg-footer">
+      <button class="submit-btn" type="submit">사전등록 완료하기</button>
+    </div>
+  </form>
+
+</div>
+<script src="assets/register.js"></script>
+</body>
+</html>
