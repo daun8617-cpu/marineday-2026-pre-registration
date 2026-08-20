@@ -1,0 +1,200 @@
+:root {
+  --admin-ink: #0f172a;
+  --admin-ink-strong: #111111;
+  --admin-muted: #64748b;
+  --admin-label: #475569;
+  --admin-placeholder: #94a3b8;
+  --admin-border: #e2e8f0;
+  --admin-accent: #00acc2;
+  --admin-error: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+}
+
+body {
+  font-family: "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+  color: var(--admin-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.admin-page {
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 52px 32px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- LOGIN ---------- */
+
+.admin-login-content {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+.admin-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-logo {
+  text-align: center;
+}
+
+.admin-logo-main {
+  margin: 0;
+  font-weight: 600;
+  font-size: 52px;
+  line-height: 1.1;
+  letter-spacing: -1.3px;
+  color: var(--admin-ink-strong);
+}
+
+.admin-logo-year {
+  margin: 0;
+  font-weight: 300;
+  font-size: 45px;
+  line-height: 1.1;
+  letter-spacing: -1.125px;
+  color: var(--admin-accent);
+}
+
+.admin-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.admin-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.3;
+  letter-spacing: -0.6px;
+  color: var(--admin-ink);
+}
+
+.admin-subtitle {
+  margin: 0;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--admin-muted);
+}
+
+.admin-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.admin-field-label {
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: -0.13px;
+  color: var(--admin-label);
+}
+
+.admin-input-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--admin-border);
+  background: #ffffff;
+}
+
+.admin-input-box:focus-within {
+  border-color: var(--admin-accent);
+}
+
+.admin-input-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.admin-input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--admin-ink);
+}
+
+.admin-input::placeholder {
+  color: var(--admin-placeholder);
+}
+
+.admin-input-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-input-toggle img {
+  width: 18px;
+  height: 18px;
+}
+
+.admin-error {
+  margin: 0;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--admin-error);
+}
+
+.admin-submit-btn {
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 12px;
+  background: var(--admin-accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.4px;
+  cursor: pointer;
+}
+
+.admin-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

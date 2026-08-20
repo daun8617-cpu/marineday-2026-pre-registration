@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>관리자 로그인 | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 사전등록 관리자 로그인" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/admin-login.css" />
+</head>
+<body>
+<div class="admin-page">
+  <form class="admin-login-content" id="admin-login-form" novalidate>
+    <div class="admin-brand">
+      <div class="admin-logo">
+        <p class="admin-logo-main">MARINE DAY</p>
+        <p class="admin-logo-year">2026</p>
+      </div>
+      <div class="admin-title-group">
+        <p class="admin-title">사전등록 관리자 시스템</p>
+        <p class="admin-subtitle">Marineworks Admin Portal</p>
+      </div>
+    </div>
+
+    <div class="admin-form-fields">
+      <div class="admin-field">
+        <label class="admin-field-label" for="admin-email">관리자 계정 (이메일)</label>
+        <div class="admin-input-box">
+          <img class="admin-input-icon" src="assets/admin-mail.svg" alt="" />
+          <input class="admin-input" id="admin-email" name="email" type="email" placeholder="admin@marineworks.co.kr" autocomplete="username" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="admin-password">비밀번호</label>
+        <div class="admin-input-box">
+          <img class="admin-input-icon" src="assets/admin-lock.svg" alt="" />
+          <input class="admin-input" id="admin-password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+          <button class="admin-input-toggle" type="button" id="admin-password-toggle" aria-label="비밀번호 표시">
+            <img src="assets/admin-eye-off.svg" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <p class="admin-error" id="admin-error" hidden></p>
+    </div>
+
+    <button class="admin-submit-btn" type="submit" id="admin-submit-btn">로그인</button>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/admin-supabase.js"></script>
+<script src="assets/admin-login.js"></script>
+</body>
+</html>

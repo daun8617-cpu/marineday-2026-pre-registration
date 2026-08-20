@@ -1,0 +1,41 @@
+.admin-dashboard-page {
+  max-width: 720px;
+  padding-top: 32px;
+}
+
+.admin-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-dashboard-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--admin-ink);
+}
+
+.admin-logout-btn {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--admin-border);
+  background: #ffffff;
+  color: var(--admin-label);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.admin-dashboard-placeholder {
+  flex: 1 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--admin-muted);
+  font-size: 14px;
+}
