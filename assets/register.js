@@ -18,6 +18,7 @@
       phone: form.phone.value.trim(),
       email: form.email.value.trim(),
       org: form.org.value.trim(),
+      position: form.position.value.trim(),
       consent: form.consent.checked,
     };
 

@@ -208,8 +208,21 @@
 .reg-footer {
   position: sticky;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   padding: 20px 0 30px;
   background: linear-gradient(to top, var(--bg) 70%, rgba(1, 4, 19, 0));
+}
+
+.lookup-link {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: var(--gray-muted);
 }
 
 .submit-btn {

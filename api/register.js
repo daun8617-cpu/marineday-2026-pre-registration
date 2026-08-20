@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, phone, email, org, consent } = req.body || {};
+  const { name, phone, email, org, position, consent } = req.body || {};
 
   if (!name || !phone || !email || !consent) {
     return res.status(400).json({ error: '필수 항목이 누락되었습니다.' });
@@ -31,6 +31,7 @@ module.exports = async function handler(req, res) {
     phone: String(phone).trim(),
     email: String(email).trim(),
     organization: org ? String(org).trim() : null,
+    position: position ? String(position).trim() : null,
   });
 
   if (error) {
