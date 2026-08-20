@@ -1,0 +1,8 @@
+{
+  "name": "marineday-2026-pre-registration",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4"
+  }
+}
