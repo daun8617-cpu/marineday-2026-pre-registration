@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>등록자 정보 수정 | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 사전등록자 정보 수정" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/admin-login.css" />
+<link rel="stylesheet" href="assets/admin-dashboard.css" />
+<link rel="stylesheet" href="assets/admin-registrants.css" />
+<link rel="stylesheet" href="assets/admin-registrant-detail.css" />
+<link rel="stylesheet" href="assets/admin-registrant-edit.css" />
+</head>
+<body>
+<div class="admin-page admin-edit-page" id="admin-edit-page" hidden>
+  <div class="admin-registrants-header">
+    <a class="admin-back-btn" id="admin-back-btn" href="admin-registrants.html" aria-label="뒤로가기">
+      <img src="assets/admin-arrow-left.svg" alt="" />
+    </a>
+    <p class="admin-registrants-title">등록자 정보 수정</p>
+  </div>
+
+  <p class="admin-dashboard-error" id="admin-dashboard-error" hidden></p>
+
+  <form class="admin-edit-body" id="admin-edit-form" novalidate hidden>
+    <div class="admin-form-fields">
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-name">이름</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-name" name="name" type="text" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-phone">연락처</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-phone" name="phone" type="tel" pattern="[0-9\-]{9,13}" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-email">이메일</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-email" name="email" type="email" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-org">소속</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-org" name="org" type="text" />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-position">직책</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-position" name="position" type="text" />
+        </div>
+      </div>
+
+      <p class="admin-error" id="admin-form-error" hidden></p>
+    </div>
+
+    <div class="admin-edit-bottom-bar">
+      <a class="admin-btn-secondary" id="admin-cancel-edit-btn" href="admin-registrants.html">취소</a>
+      <button class="admin-btn-edit" type="submit" id="admin-save-btn">저장</button>
+    </div>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/admin-supabase.js"></script>
+<script src="assets/admin-registrant-edit.js"></script>
+</body>
+</html>

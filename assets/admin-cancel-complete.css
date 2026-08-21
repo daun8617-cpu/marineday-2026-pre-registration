@@ -1,0 +1,74 @@
+.admin-cancel-complete-page {
+  max-width: 640px;
+  min-height: 100vh;
+  padding: 32px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-cancel-complete-center {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.admin-success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+  background: linear-gradient(105deg, #0ae9e0 0.94%, #3678b4 97.19%);
+  box-shadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+.admin-success-icon img {
+  width: 32px;
+  height: 32px;
+}
+
+.admin-cancel-complete-message {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-cancel-complete-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--admin-ink);
+}
+
+.admin-cancel-complete-subtitle {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--admin-muted);
+}
+
+.admin-cancel-complete-bottom {
+  padding: 12px 20px 32px;
+}
+
+.admin-btn-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  width: 100%;
+  border-radius: 12px;
+  background: linear-gradient(152deg, #0ae9e0 0.94%, #3678b4 97.19%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+}

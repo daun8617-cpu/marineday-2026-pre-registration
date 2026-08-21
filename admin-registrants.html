@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>사전등록자 전체보기 | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 사전등록자 전체 목록" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/admin-login.css" />
+<link rel="stylesheet" href="assets/admin-dashboard.css" />
+<link rel="stylesheet" href="assets/admin-registrants.css" />
+</head>
+<body>
+<div class="admin-page admin-registrants-page" id="admin-registrants-page" hidden>
+  <div class="admin-registrants-header">
+    <a class="admin-back-btn" href="admin-dashboard.html" aria-label="뒤로가기">
+      <img src="assets/admin-arrow-left.svg" alt="" />
+    </a>
+    <p class="admin-registrants-title">사전등록자 전체보기</p>
+  </div>
+
+  <p class="admin-dashboard-error" id="admin-dashboard-error" hidden></p>
+
+  <div class="admin-registrants-body" id="admin-registrants-body" hidden>
+    <div class="admin-search-bar">
+      <img src="assets/admin-search.svg" alt="" />
+      <input type="text" id="admin-search-input" placeholder="이름, 전화번호, 이메일로 검색" />
+    </div>
+
+    <div class="admin-filter-tabs" id="admin-filter-tabs">
+      <button class="admin-filter-tab active" data-filter="all" type="button">전체</button>
+      <button class="admin-filter-tab" data-filter="today" type="button">오늘</button>
+      <button class="admin-filter-tab" data-filter="week" type="button">이번주</button>
+      <button class="admin-filter-tab" data-filter="month" type="button">이번달</button>
+    </div>
+
+    <div class="admin-list-summary">
+      <p class="admin-list-count">총 <span id="admin-list-count-num">0</span>명</p>
+      <button class="admin-download-btn" id="admin-download-btn" type="button">
+        <img src="assets/admin-download.svg" alt="" />
+        엑셀 다운로드
+      </button>
+    </div>
+
+    <div class="admin-registrants-list" id="admin-registrants-list"></div>
+
+    <div class="admin-pagination-area">
+      <button class="admin-more-btn" id="admin-more-btn" type="button">
+        <span id="admin-more-btn-label">더보기</span>
+        <img src="assets/admin-chevron-down.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/admin-supabase.js"></script>
+<script src="assets/admin-registrants.js"></script>
+</body>
+</html>

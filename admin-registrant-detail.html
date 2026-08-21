@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>등록자 상세정보 | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 사전등록자 상세정보" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/admin-login.css" />
+<link rel="stylesheet" href="assets/admin-dashboard.css" />
+<link rel="stylesheet" href="assets/admin-registrants.css" />
+<link rel="stylesheet" href="assets/admin-registrant-detail.css" />
+</head>
+<body>
+<div class="admin-page admin-detail-page" id="admin-detail-page" hidden>
+  <div class="admin-registrants-header">
+    <a class="admin-back-btn" href="admin-registrants.html" aria-label="뒤로가기">
+      <img src="assets/admin-arrow-left.svg" alt="" />
+    </a>
+    <p class="admin-registrants-title">등록자 상세정보</p>
+  </div>
+
+  <p class="admin-dashboard-error" id="admin-dashboard-error" hidden></p>
+
+  <div class="admin-detail-body" id="admin-detail-body" hidden>
+    <div class="admin-profile-card">
+      <div class="admin-avatar" id="admin-avatar">-</div>
+      <div class="admin-name-status-group">
+        <p class="admin-profile-name" id="admin-profile-name">-</p>
+        <span class="admin-status-tag" id="admin-status-tag">등록완료</span>
+      </div>
+    </div>
+
+    <div class="admin-info-card">
+      <div class="admin-info-row">
+        <p class="admin-info-label">전화번호</p>
+        <p class="admin-info-value" id="admin-info-phone">-</p>
+      </div>
+      <div class="admin-info-row">
+        <p class="admin-info-label">이메일</p>
+        <p class="admin-info-value" id="admin-info-email">-</p>
+      </div>
+      <div class="admin-info-row">
+        <p class="admin-info-label">소속</p>
+        <p class="admin-info-value" id="admin-info-org">-</p>
+      </div>
+      <div class="admin-info-row">
+        <p class="admin-info-label">직책</p>
+        <p class="admin-info-value" id="admin-info-position">-</p>
+      </div>
+      <div class="admin-info-row">
+        <p class="admin-info-label">등록일시</p>
+        <p class="admin-info-value" id="admin-info-created">-</p>
+      </div>
+    </div>
+
+    <p class="admin-action-message" id="admin-action-message" hidden></p>
+
+    <div class="admin-detail-bottom-bar">
+      <button class="admin-btn-delete" id="admin-btn-delete" type="button">
+        <img src="assets/admin-trash.svg" alt="" />
+        <span id="admin-btn-delete-label">등록취소</span>
+      </button>
+      <button class="admin-btn-edit" id="admin-btn-edit" type="button">
+        <img src="assets/admin-edit.svg" alt="" />
+        수정
+      </button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/admin-supabase.js"></script>
+<script src="assets/admin-registrant-detail.js"></script>
+</body>
+</html>

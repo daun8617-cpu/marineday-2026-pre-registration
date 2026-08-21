@@ -14,11 +14,71 @@
 <body>
 <div class="admin-page admin-dashboard-page" id="admin-dashboard-page" hidden>
   <header class="admin-dashboard-header">
-    <p class="admin-dashboard-title">사전등록 관리자 시스템</p>
+    <p class="admin-dashboard-title">사전등록 관리</p>
     <button class="admin-logout-btn" id="admin-logout-btn" type="button">로그아웃</button>
   </header>
-  <div class="admin-dashboard-placeholder">
-    <p>대시보드 화면은 준비 중입니다.</p>
+
+  <p class="admin-dashboard-error" id="admin-dashboard-error" hidden></p>
+
+  <div class="admin-dashboard-body" id="admin-dashboard-body" hidden>
+    <section class="admin-kpi-section">
+      <div class="admin-section-header">
+        <p class="admin-section-title">요약 통계</p>
+      </div>
+      <div class="admin-kpi-grid">
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-top">
+            <div class="admin-kpi-icon blue">
+              <img src="assets/admin-users.svg" alt="" />
+            </div>
+            <p class="admin-kpi-label">총 사전등록자 수</p>
+          </div>
+          <p class="admin-kpi-value" id="admin-kpi-total">-</p>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-top">
+            <div class="admin-kpi-icon green">
+              <img src="assets/admin-eye-kpi.svg" alt="" />
+            </div>
+            <p class="admin-kpi-label">오늘 신규 등록자 수</p>
+          </div>
+          <p class="admin-kpi-value" id="admin-kpi-today">-</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-chart-section">
+      <div class="admin-section-header">
+        <p class="admin-section-title">사전등록 추이</p>
+        <div class="admin-tabs">
+          <button class="admin-tab active" id="admin-tab-daily" type="button">일별</button>
+          <button class="admin-tab" id="admin-tab-weekly" type="button">주별</button>
+        </div>
+      </div>
+      <div class="admin-chart-card">
+        <div class="admin-chart-header">
+          <p class="admin-chart-title" id="admin-chart-title">일별 사전등록 추이</p>
+          <p class="admin-chart-delta" id="admin-chart-delta"></p>
+        </div>
+        <div class="admin-plot-area">
+          <div class="admin-plot-gridline" style="top: 24px;"></div>
+          <div class="admin-plot-gridline" style="top: 79px;"></div>
+          <div class="admin-plot-gridline" style="top: 134px;"></div>
+          <svg class="admin-plot-svg" id="admin-plot-svg" viewBox="0 0 700 160" preserveAspectRatio="none">
+            <polyline id="admin-plot-line" points="" fill="none" stroke="#00acc2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
+          </svg>
+        </div>
+        <div class="admin-x-axis" id="admin-x-axis"></div>
+      </div>
+    </section>
+
+    <section class="admin-members-section">
+      <div class="admin-section-header">
+        <p class="admin-section-title">최근 사전등록자</p>
+        <a class="admin-section-link" href="admin-registrants.html">전체보기</a>
+      </div>
+      <div class="admin-members-list" id="admin-members-list"></div>
+    </section>
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
