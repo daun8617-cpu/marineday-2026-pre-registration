@@ -7,6 +7,7 @@
 
   const searchInput = document.getElementById('admin-search-input');
   const filterTabsEl = document.getElementById('admin-filter-tabs');
+  const checkinFilterTabsEl = document.getElementById('admin-checkin-filter-tabs');
   const countNumEl = document.getElementById('admin-list-count-num');
   const listEl = document.getElementById('admin-registrants-list');
   const moreBtn = document.getElementById('admin-more-btn');
@@ -15,8 +16,16 @@
 
   const PAGE_SIZE = 20;
 
+  const CHECKIN_FILTER_LABELS = {
+    all: '전체',
+    checked_in: '체크인',
+    not_checked_in: '미체크인',
+    cancelled: '취소',
+  };
+
   let registrations = [];
   let currentFilter = 'all';
+  let currentCheckinFilter = 'all';
   let searchTerm = '';
   let visibleCount = PAGE_SIZE;
 
@@ -46,6 +55,15 @@
     return `${y}.${m}.${d}`;
   }
 
+  function formatKstTime(dateInput) {
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Seoul',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).format(new Date(dateInput));
+  }
+
   function escapeHtml(value) {
     return String(value).replace(/[&<>"']/g, (ch) => ({
       '&': '&amp;',
@@ -54,10 +72,6 @@
       '"': '&quot;',
       "'": '&#39;',
     }[ch]));
-  }
-
-  function activeRegistrations() {
-    return registrations.filter((r) => r.status !== 'cancelled');
   }
 
   function matchesFilter(r) {
@@ -89,13 +103,44 @@
     );
   }
 
+  function matchesCheckinFilter(r) {
+    if (currentCheckinFilter === 'checked_in') return r.status !== 'cancelled' && !!r.checked_in;
+    if (currentCheckinFilter === 'not_checked_in') return r.status !== 'cancelled' && !r.checked_in;
+    if (currentCheckinFilter === 'cancelled') return r.status === 'cancelled';
+    return true; // 'all'
+  }
+
+  function dateAndSearchFiltered() {
+    return registrations.filter(matchesFilter).filter(matchesSearch);
+  }
+
   function filteredRegistrations() {
-    return activeRegistrations()
-      .filter(matchesFilter)
-      .filter(matchesSearch);
+    return dateAndSearchFiltered().filter(matchesCheckinFilter);
+  }
+
+  function renderCheckinFilterCounts() {
+    const base = dateAndSearchFiltered();
+    const counts = {
+      all: base.length,
+      checked_in: base.filter((r) => r.status !== 'cancelled' && r.checked_in).length,
+      not_checked_in: base.filter((r) => r.status !== 'cancelled' && !r.checked_in).length,
+      cancelled: base.filter((r) => r.status === 'cancelled').length,
+    };
+    checkinFilterTabsEl.querySelectorAll('.admin-filter-tab').forEach((btn) => {
+      const key = btn.dataset.checkinFilter;
+      btn.textContent = `${CHECKIN_FILTER_LABELS[key]} (${counts[key].toLocaleString('ko-KR')})`;
+    });
+  }
+
+  function checkinBadge(r) {
+    if (r.status === 'cancelled') return { cls: 'cancelled', label: '취소' };
+    if (r.checked_in) return { cls: 'ok', label: '체크인 완료' };
+    return { cls: 'muted', label: '미체크인' };
   }
 
   function renderList() {
+    renderCheckinFilterCounts();
+
     const filtered = filteredRegistrations();
     const visible = filtered.slice(0, visibleCount);
 
@@ -111,11 +156,17 @@
           const phone = escapeHtml(r.phone);
           const org = escapeHtml(r.organization || '-');
           const email = escapeHtml(r.email);
+          const badge = checkinBadge(r);
+          const timeText = r.checked_in_at ? formatKstTime(r.checked_in_at) : '-';
           return `
             <a class="admin-registrant-card" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
               <div class="admin-registrant-top"><p>${date}</p><p>${name}</p></div>
               <div class="admin-registrant-middle"><p>${phone}</p><p>${org}</p></div>
               <p class="admin-registrant-email">${email}</p>
+              <div class="admin-registrant-checkin-row">
+                <span class="admin-checkin-badge ${badge.cls}">${badge.label}</span>
+                <span class="admin-checkin-time">${timeText}</span>
+              </div>
             </a>
           `;
         })
@@ -139,6 +190,16 @@
     filterTabsEl.querySelectorAll('.admin-filter-tab').forEach((el) => el.classList.remove('active'));
     btn.classList.add('active');
     currentFilter = btn.dataset.filter;
+    visibleCount = PAGE_SIZE;
+    renderList();
+  });
+
+  checkinFilterTabsEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('.admin-filter-tab');
+    if (!btn) return;
+    checkinFilterTabsEl.querySelectorAll('.admin-filter-tab').forEach((el) => el.classList.remove('active'));
+    btn.classList.add('active');
+    currentCheckinFilter = btn.dataset.checkinFilter;
     visibleCount = PAGE_SIZE;
     renderList();
   });

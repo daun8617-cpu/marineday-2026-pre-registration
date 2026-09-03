@@ -80,8 +80,10 @@
 
 /* ---------- FILTER TABS ---------- */
 
-.admin-filter-tabs {
+.admin-filter-tabs,
+.admin-checkin-filter-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin: 0 20px;
 }
@@ -186,6 +188,46 @@
 .admin-registrant-email {
   margin: 0;
   font-weight: 400;
+  color: var(--admin-muted);
+}
+
+/* ---------- CHECK-IN STATUS ---------- */
+
+.admin-registrant-checkin-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-checkin-badge {
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.admin-checkin-badge.ok {
+  background: var(--admin-green-50, #ecfdf5);
+  color: #059669;
+}
+
+.admin-checkin-badge.muted {
+  background: #f1f5f9;
+  color: var(--admin-muted);
+}
+
+.admin-checkin-badge.cancelled {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.admin-checkin-time {
+  font-weight: 600;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
   color: var(--admin-muted);
 }
 
