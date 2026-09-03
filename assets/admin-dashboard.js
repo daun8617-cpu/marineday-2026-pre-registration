@@ -8,6 +8,9 @@
 
   const kpiTotalEl = document.getElementById('admin-kpi-total');
   const kpiTodayEl = document.getElementById('admin-kpi-today');
+  const kpiCheckedInEl = document.getElementById('admin-kpi-checked-in');
+  const kpiNotCheckedInEl = document.getElementById('admin-kpi-not-checked-in');
+  const kpiCheckinRateEl = document.getElementById('admin-kpi-checkin-rate');
 
   const tabDailyBtn = document.getElementById('admin-tab-daily');
   const tabWeeklyBtn = document.getElementById('admin-tab-weekly');
@@ -99,6 +102,14 @@
 
     kpiTotalEl.textContent = active.length.toLocaleString('ko-KR');
     kpiTodayEl.textContent = todayCount.toLocaleString('ko-KR');
+
+    const checkedInCount = active.filter((r) => r.checked_in).length;
+    const notCheckedInCount = active.length - checkedInCount;
+    const checkinRate = active.length > 0 ? Math.round((checkedInCount / active.length) * 100) : 0;
+
+    kpiCheckedInEl.textContent = checkedInCount.toLocaleString('ko-KR');
+    kpiNotCheckedInEl.textContent = notCheckedInCount.toLocaleString('ko-KR');
+    kpiCheckinRateEl.textContent = `${checkinRate}%`;
   }
 
   function renderChart() {

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>QR 체크인 | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 현장 QR 체크인" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/admin-login.css" />
+<link rel="stylesheet" href="assets/admin-checkin.css" />
+</head>
+<body>
+<div class="admin-page admin-checkin-page" id="admin-checkin-page" hidden>
+  <div class="admin-checkin-header">
+    <a class="admin-back-btn" href="admin-dashboard.html" aria-label="뒤로가기">
+      <img src="assets/admin-arrow-left.svg" alt="" />
+    </a>
+    <p class="admin-checkin-title">QR 체크인</p>
+  </div>
+
+  <p class="admin-dashboard-error" id="admin-checkin-error" hidden></p>
+
+  <div class="admin-checkin-body" id="admin-checkin-body" hidden>
+    <div id="admin-checkin-reader"></div>
+
+    <div class="admin-checkin-manual">
+      <input id="admin-checkin-manual-input" type="text" placeholder="QR 인식이 안 될 때 토큰 직접 입력" />
+      <button id="admin-checkin-manual-btn" type="button">체크인</button>
+    </div>
+
+    <div class="admin-checkin-result" id="admin-checkin-result"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/admin-supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script src="assets/admin-checkin.js"></script>
+</body>
+</html>

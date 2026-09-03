@@ -1,0 +1,131 @@
+.admin-checkin-page {
+  max-width: 480px;
+  padding: 32px 0 40px;
+  gap: 20px;
+}
+
+.admin-checkin-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 8px;
+}
+
+.admin-checkin-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--admin-ink);
+}
+
+.admin-checkin-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 20px;
+}
+
+#admin-checkin-reader {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--admin-border);
+}
+
+.admin-checkin-manual {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-checkin-manual input {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--admin-border);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--admin-ink);
+}
+
+.admin-checkin-manual input:focus {
+  outline: none;
+  border-color: var(--admin-accent);
+}
+
+.admin-checkin-manual button {
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: var(--admin-accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-checkin-result {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1.5px solid transparent;
+}
+
+.admin-checkin-result.visible {
+  display: flex;
+}
+
+.admin-checkin-result .status-label {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.admin-checkin-result .status-name {
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--admin-ink);
+}
+
+.admin-checkin-result .status-sub {
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--admin-muted);
+}
+
+.admin-checkin-result.ok {
+  background: #ecfdf5;
+  border-color: #34d399;
+}
+.admin-checkin-result.ok .status-label {
+  color: #059669;
+}
+
+.admin-checkin-result.dup {
+  background: #fffbeb;
+  border-color: #fbbf24;
+}
+.admin-checkin-result.dup .status-label {
+  color: #b45309;
+}
+
+.admin-checkin-result.notfound {
+  background: #f8fafc;
+  border-color: var(--admin-border);
+}
+.admin-checkin-result.notfound .status-label {
+  color: var(--admin-muted);
+}
+
+.admin-checkin-result.err {
+  background: #fef2f2;
+  border-color: #f87171;
+}
+.admin-checkin-result.err .status-label {
+  color: var(--admin-error);
+}

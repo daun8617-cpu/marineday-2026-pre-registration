@@ -15,7 +15,10 @@
 <div class="admin-page admin-dashboard-page" id="admin-dashboard-page" hidden>
   <header class="admin-dashboard-header">
     <p class="admin-dashboard-title">사전등록 관리</p>
-    <button class="admin-logout-btn" id="admin-logout-btn" type="button">로그아웃</button>
+    <nav class="admin-dashboard-nav">
+      <a class="admin-nav-link" href="admin-checkin.html">QR 체크인</a>
+      <button class="admin-logout-btn" id="admin-logout-btn" type="button">로그아웃</button>
+    </nav>
   </header>
 
   <p class="admin-dashboard-error" id="admin-dashboard-error" hidden></p>
@@ -43,6 +46,41 @@
             <p class="admin-kpi-label">오늘 신규 등록자 수</p>
           </div>
           <p class="admin-kpi-value" id="admin-kpi-today">-</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-kpi-section">
+      <div class="admin-section-header">
+        <p class="admin-section-title">체크인 현황</p>
+      </div>
+      <div class="admin-kpi-grid">
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-top">
+            <div class="admin-kpi-icon green">
+              <img src="assets/admin-success-check.svg" alt="" />
+            </div>
+            <p class="admin-kpi-label">체크인 완료</p>
+          </div>
+          <p class="admin-kpi-value" id="admin-kpi-checked-in">-</p>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-top">
+            <div class="admin-kpi-icon blue">
+              <img src="assets/admin-users.svg" alt="" />
+            </div>
+            <p class="admin-kpi-label">미체크인</p>
+          </div>
+          <p class="admin-kpi-value" id="admin-kpi-not-checked-in">-</p>
+        </div>
+        <div class="admin-kpi-card">
+          <div class="admin-kpi-top">
+            <div class="admin-kpi-icon amber">
+              <img src="assets/admin-eye-kpi.svg" alt="" />
+            </div>
+            <p class="admin-kpi-label">체크인율</p>
+          </div>
+          <p class="admin-kpi-value" id="admin-kpi-checkin-rate">-</p>
         </div>
       </div>
     </section>

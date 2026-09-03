@@ -1,6 +1,7 @@
 :root {
   --admin-blue-50: #eff6ff;
   --admin-green-50: #ecfdf5;
+  --admin-amber-50: #fffbeb;
   --admin-slate-50: #f8fafc;
   --admin-teal-700: #0f766e;
   --admin-link-teal: #007888;
@@ -25,6 +26,26 @@
   font-weight: 700;
   font-size: 18px;
   color: var(--admin-ink);
+}
+
+.admin-dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--admin-border);
+  background: #ffffff;
+  color: var(--admin-link-teal);
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
 }
 
 .admin-logout-btn {
@@ -133,6 +154,10 @@
 
 .admin-kpi-icon.green {
   background: var(--admin-green-50);
+}
+
+.admin-kpi-icon.amber {
+  background: var(--admin-amber-50);
 }
 
 .admin-kpi-icon img {

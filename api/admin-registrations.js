@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
 
   const { data, error } = await supabase
     .from('registrations')
-    .select('id, name, phone, email, organization, position, status, created_at')
+    .select('id, name, phone, email, organization, position, status, created_at, checked_in')
     .order('created_at', { ascending: false });
 
   if (error) {
