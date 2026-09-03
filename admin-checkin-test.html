@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>QR Check-in — Scan Flow Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 16px 48px;
+    background: #0b0f14;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    text-align: center;
+  }
+  h1 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #8b98a5;
+    text-transform: uppercase;
+    margin: 8px 0 0;
+  }
+  #reader {
+    width: 320px;
+    max-width: 90vw;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .manual-row {
+    display: flex;
+    gap: 8px;
+    width: 320px;
+    max-width: 90vw;
+  }
+  .manual-row input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #2d3742;
+    background: #151b22;
+    color: #e6edf3;
+    font-size: 13px;
+  }
+  .manual-row button, .logout-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #2f81f7;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .logout-btn {
+    background: transparent;
+    border: 1px solid #2d3742;
+    color: #8b98a5;
+  }
+  #result {
+    width: 320px;
+    max-width: 90vw;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 14px;
+    display: none;
+  }
+  #result.ok { background: #113321; border: 1px solid #2ea043; display: block; }
+  #result.dup { background: #332b11; border: 1px solid #d29922; display: block; }
+  #result.err { background: #33141a; border: 1px solid #f85149; display: block; }
+  #result .name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  #result .sub { color: #8b98a5; font-size: 12px; }
+  .warn {
+    font-size: 12px;
+    color: #f0883e;
+    max-width: 320px;
+  }
+  #login-gate {
+    color: #8b98a5;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+  <h1>QR Check-in — 스캔 흐름 테스트 (내부 전용)</h1>
+  <p id="login-gate">로그인 확인 중...</p>
+
+  <div id="app" style="display:none; width:100%; align-items:center; flex-direction:column; gap:16px;">
+    <div id="reader"></div>
+
+    <div class="manual-row">
+      <input id="manual-token" type="text" placeholder="qr_token 직접 입력 (테스트용)" />
+      <button id="manual-submit" type="button">체크인</button>
+    </div>
+
+    <div id="result"></div>
+
+    <p class="warn">이 페이지는 /api/admin-checkin 실제 체크인 API를 호출합니다 — 스캔/제출 시 해당 등록자의 checked_in이 실제로 갱신됩니다.</p>
+
+    <button class="logout-btn" id="logout-btn" type="button">로그아웃</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="assets/admin-supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script>
+    (function () {
+      const client = supabase.createClient(window.ADMIN_SUPABASE_URL, window.ADMIN_SUPABASE_KEY);
+      const loginGate = document.getElementById('login-gate');
+      const app = document.getElementById('app');
+      const resultEl = document.getElementById('result');
+      const manualInput = document.getElementById('manual-token');
+      const manualBtn = document.getElementById('manual-submit');
+      const logoutBtn = document.getElementById('logout-btn');
+
+      let accessToken = null;
+      let busy = false;
+
+      function showResult(status, html) {
+        resultEl.className = status;
+        resultEl.innerHTML = html;
+      }
+
+      async function submitToken(qrToken) {
+        if (busy || !qrToken) return;
+        busy = true;
+        try {
+          const res = await fetch('/api/admin-checkin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ qr_token: qrToken }),
+          });
+          const body = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            showResult('err', `<div class="name">체크인 실패</div><div class="sub">${body.error || '오류가 발생했습니다.'}</div>`);
+            return;
+          }
+
+          if (body.already) {
+            showResult('dup', `<div class="name">${body.name || ''} — 이미 체크인됨</div><div class="sub">${body.organization || ''} · ${body.checked_in_at || ''}</div>`);
+          } else {
+            showResult('ok', `<div class="name">${body.name || ''} — 체크인 완료</div><div class="sub">${body.organization || ''} · ${body.checked_in_at || ''}</div>`);
+          }
+        } catch (err) {
+          showResult('err', `<div class="name">체크인 실패</div><div class="sub">${err.message || '네트워크 오류'}</div>`);
+        } finally {
+          busy = false;
+        }
+      }
+
+      manualBtn.addEventListener('click', function () {
+        submitToken(manualInput.value.trim());
+      });
+
+      logoutBtn.addEventListener('click', async function () {
+        await client.auth.signOut();
+        window.location.href = 'admin-login.html';
+      });
+
+      (async function init() {
+        const { data } = await client.auth.getSession();
+        if (!data.session) {
+          window.location.href = 'admin-login.html';
+          return;
+        }
+        accessToken = data.session.access_token;
+        loginGate.style.display = 'none';
+        app.style.display = 'flex';
+
+        const scanner = new Html5QrcodeScanner('reader', { fps: 10, qrbox: 250 }, false);
+        scanner.render(function (decodedText) {
+          submitToken(decodedText.trim());
+        }, function () {
+          // ignore per-frame scan failures (normal while no QR is in view)
+        });
+      })();
+    })();
+  </script>
+
+</body>
+</html>

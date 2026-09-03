@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const crypto = require('crypto');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -7,6 +8,12 @@ const supabase = createClient(
 
 const PHONE_PATTERN = /^[0-9-]{9,13}$/;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const QR_TOKEN_UNIQUE_CONSTRAINT = 'registrations_qr_token_key';
+const MAX_QR_TOKEN_ATTEMPTS = 5;
+
+function generateQrToken() {
+  return crypto.randomBytes(32).toString('hex');
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -26,18 +33,32 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: '이메일 형식이 올바르지 않습니다.' });
   }
 
-  const { error } = await supabase.from('registrations').insert({
+  const baseRecord = {
     name: String(name).trim(),
     phone: String(phone).trim(),
     email: String(email).trim(),
     organization: org ? String(org).trim() : null,
     position: position ? String(position).trim() : null,
-  });
+  };
 
-  if (error) {
-    console.error('Supabase insert error:', error);
-    return res.status(500).json({ error: '등록 처리 중 오류가 발생했습니다.' });
+  let error;
+  for (let attempt = 0; attempt < MAX_QR_TOKEN_ATTEMPTS; attempt++) {
+    ({ error } = await supabase.from('registrations').insert({
+      ...baseRecord,
+      qr_token: generateQrToken(),
+    }));
+
+    if (!error) {
+      return res.status(200).json({ ok: true });
+    }
+    // Astronomically unlikely, but retry with a fresh token if the random
+    // value happened to collide with an existing one; any other error
+    // (including unrelated constraint violations) is not retried.
+    if (error.code !== '23505' || !error.message?.includes(QR_TOKEN_UNIQUE_CONSTRAINT)) {
+      break;
+    }
   }
 
-  return res.status(200).json({ ok: true });
+  console.error('Supabase insert error:', error);
+  return res.status(500).json({ error: '등록 처리 중 오류가 발생했습니다.' });
 };

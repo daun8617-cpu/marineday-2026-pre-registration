@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>QR Check-in — Generation Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 32px 16px;
+    background: #0b0f14;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    text-align: center;
+  }
+  h1 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #8b98a5;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  #qr-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    line-height: 0;
+  }
+  .meta {
+    font-size: 13px;
+    color: #8b98a5;
+  }
+  .meta code {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    color: #c9d1d9;
+    word-break: break-all;
+    max-width: 320px;
+  }
+  .warn {
+    font-size: 12px;
+    color: #f0883e;
+    max-width: 320px;
+  }
+</style>
+</head>
+<body>
+
+  <h1>QR Check-in — 생성 테스트 (내부 전용)</h1>
+
+  <div id="qr-box"><canvas id="qr-canvas"></canvas></div>
+
+  <div class="meta">
+    테스트 등록자 ID: <strong>16</strong>
+    <code id="token-display"></code>
+  </div>
+
+  <p class="warn">이 QR에는 qr_token 값만 인코딩되어 있습니다. 스캔 인식 확인용이며 체크인 처리는 아직 연결되지 않았습니다.</p>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script>
+    var QR_TOKEN = "c7cc52bfaa8ff1525fc593a692dce91150949db73a4ecedf97567f736a58a189";
+
+    document.getElementById('token-display').textContent = QR_TOKEN;
+
+    QRCode.toCanvas(document.getElementById('qr-canvas'), QR_TOKEN, {
+      width: 320,
+      margin: 1,
+      errorCorrectionLevel: 'M'
+    }, function (err) {
+      if (err) console.error('QR generation failed:', err);
+    });
+  </script>
+
+</body>
+</html>
