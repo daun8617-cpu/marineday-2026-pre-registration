@@ -104,9 +104,10 @@
   }
 
   function matchesCheckinFilter(r) {
-    if (currentCheckinFilter === 'checked_in') return r.status !== 'cancelled' && !!r.checked_in;
-    if (currentCheckinFilter === 'not_checked_in') return r.status !== 'cancelled' && !r.checked_in;
-    if (currentCheckinFilter === 'cancelled') return r.status === 'cancelled';
+    const key = AdminRegistrationStatus.getStatusInfo(r).key;
+    if (currentCheckinFilter === 'checked_in') return key === 'checked_in';
+    if (currentCheckinFilter === 'not_checked_in') return key === 'registered';
+    if (currentCheckinFilter === 'cancelled') return key === 'cancelled';
     return true; // 'all'
   }
 
@@ -120,11 +121,12 @@
 
   function renderCheckinFilterCounts() {
     const base = dateAndSearchFiltered();
+    const keys = base.map((r) => AdminRegistrationStatus.getStatusInfo(r).key);
     const counts = {
       all: base.length,
-      checked_in: base.filter((r) => r.status !== 'cancelled' && r.checked_in).length,
-      not_checked_in: base.filter((r) => r.status !== 'cancelled' && !r.checked_in).length,
-      cancelled: base.filter((r) => r.status === 'cancelled').length,
+      checked_in: keys.filter((k) => k === 'checked_in').length,
+      not_checked_in: keys.filter((k) => k === 'registered').length,
+      cancelled: keys.filter((k) => k === 'cancelled').length,
     };
     checkinFilterTabsEl.querySelectorAll('.admin-filter-tab').forEach((btn) => {
       const key = btn.dataset.checkinFilter;
@@ -132,10 +134,15 @@
     });
   }
 
+  const STATUS_BADGE_CLASS = {
+    registered: 'muted',
+    checked_in: 'ok',
+    cancelled: 'cancelled',
+  };
+
   function checkinBadge(r) {
-    if (r.status === 'cancelled') return { cls: 'cancelled', label: '취소' };
-    if (r.checked_in) return { cls: 'ok', label: '체크인 완료' };
-    return { cls: 'muted', label: '미체크인' };
+    const info = AdminRegistrationStatus.getStatusInfo(r);
+    return { cls: STATUS_BADGE_CLASS[info.key], label: info.label };
   }
 
   function renderList() {
@@ -219,14 +226,20 @@
 
   downloadBtn.addEventListener('click', function () {
     const filtered = filteredRegistrations();
-    const header = ['등록일', '이름', '전화번호', '이메일', '소속', '직급'];
+    const header = [
+      '등록일시', '이름', '전화번호', '이메일', '소속', '직급',
+      '사전등록 상태', '체크인 상태', '체크인일시',
+    ];
     const rows = filtered.map((r) => [
-      formatDotDate(kstCalendarDate(r.created_at)),
+      `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`,
       r.name,
       r.phone,
       r.email,
       r.organization || '',
       r.position || '',
+      AdminRegistrationStatus.getStatusInfo(r).label,
+      r.checked_in ? '체크인완료' : '미체크인',
+      r.checked_in_at ? `${formatDotDate(kstCalendarDate(r.checked_in_at))} ${formatKstTime(r.checked_in_at)}` : '',
     ]);
     const csv = [header, ...rows].map((row) => row.map(toCsvValue).join(',')).join('\r\n');
     const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });

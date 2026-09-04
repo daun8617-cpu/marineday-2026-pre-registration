@@ -14,6 +14,8 @@
   const orgEl = document.getElementById('admin-info-org');
   const positionEl = document.getElementById('admin-info-position');
   const createdEl = document.getElementById('admin-info-created');
+  const checkinRowEl = document.getElementById('admin-info-checkin-row');
+  const checkinEl = document.getElementById('admin-info-checkin');
 
   const deleteBtn = document.getElementById('admin-btn-delete');
   const deleteBtnLabel = document.getElementById('admin-btn-delete-label');
@@ -73,8 +75,16 @@
     positionEl.textContent = record.position || '-';
     createdEl.textContent = formatDateTime(record.created_at);
 
-    const cancelled = record.status === 'cancelled';
-    statusTagEl.textContent = cancelled ? '취소됨' : '등록완료';
+    if (record.checked_in && record.checked_in_at) {
+      checkinEl.textContent = formatDateTime(record.checked_in_at);
+      checkinRowEl.hidden = false;
+    } else {
+      checkinRowEl.hidden = true;
+    }
+
+    const statusInfo = AdminRegistrationStatus.getStatusInfo(record);
+    const cancelled = statusInfo.key === 'cancelled';
+    statusTagEl.textContent = statusInfo.label;
     statusTagEl.classList.toggle('cancelled', cancelled);
     deleteBtn.disabled = cancelled;
     deleteBtnLabel.textContent = cancelled ? '취소됨' : '등록취소';
