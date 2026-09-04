@@ -4,6 +4,7 @@
   const resultCard = document.getElementById('result-card');
   const cancelBlock = document.getElementById('cancel-block');
   const cancelBtn = document.getElementById('cancel-btn');
+  const qrCard = document.getElementById('qr-card');
   let currentRecord = null;
 
   function formatPhone(phone) {
@@ -31,6 +32,22 @@
     document.getElementById('result-email').textContent = record.email;
     document.getElementById('result-org').textContent = record.organization || '-';
     document.getElementById('result-date').textContent = formatDate(record.created_at);
+
+    if (record.qr_token && window.QRCode) {
+      qrCard.hidden = false;
+      QRCode.toCanvas(document.getElementById('qr-canvas'), record.qr_token, {
+        width: 220,
+        margin: 1,
+        errorCorrectionLevel: 'M',
+      }, function (err) {
+        if (err) {
+          console.error('QR 생성 실패:', err);
+          qrCard.hidden = true;
+        }
+      });
+    } else {
+      qrCard.hidden = true;
+    }
 
     resultCard.hidden = false;
     cancelBlock.hidden = false;

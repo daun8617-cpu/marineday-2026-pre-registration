@@ -36,7 +36,17 @@
         throw new Error(body.error || '등록에 실패했습니다.');
       }
 
-      const params = new URLSearchParams({ name: data.name, email: data.email });
+      const body = await res.json().catch(() => ({}));
+
+      try {
+        if (body.qr_token) {
+          sessionStorage.setItem('md-qr-token', body.qr_token);
+        }
+      } catch (storageErr) {
+        console.error('QR 토큰 저장 실패:', storageErr);
+      }
+
+      const params = new URLSearchParams({ name: data.name, email: data.email, phone: data.phone });
       window.location.href = 'complete.html?' + params.toString();
     } catch (err) {
       console.error('사전등록 제출 실패:', err);

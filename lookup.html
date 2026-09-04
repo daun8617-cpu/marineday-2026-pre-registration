@@ -10,6 +10,7 @@
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
 <link rel="stylesheet" href="assets/style.css" />
 <link rel="stylesheet" href="assets/register.css" />
+<link rel="stylesheet" href="assets/qr-card.css" />
 <link rel="stylesheet" href="assets/lookup.css" />
 </head>
 <body>
@@ -49,6 +50,13 @@
         <span class="result-status" id="result-status">등록완료</span>
       </div>
       <div class="result-divider"></div>
+
+      <div class="qr-card" id="qr-card" hidden>
+        <p class="qr-heading">체크인용 QR 코드</p>
+        <div class="qr-box"><canvas id="qr-canvas"></canvas></div>
+        <p class="qr-caption">행사 당일 입장 시 이 QR 코드를 제시해 주세요.</p>
+      </div>
+
       <div class="result-rows">
         <div class="result-row">
           <span class="result-key">이름</span>
@@ -80,6 +88,7 @@
   </form>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 <script src="assets/lookup.js"></script>
 </body>
 </html>

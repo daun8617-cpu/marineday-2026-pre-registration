@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
 
   const { data, error } = await supabase
     .from('registrations')
-    .select('name, phone, email, organization, status, created_at')
+    .select('name, phone, email, organization, status, created_at, qr_token')
     .eq('name', String(name).trim())
     .eq('phone', String(phone).trim())
     .limit(1)
@@ -50,5 +50,6 @@ module.exports = async function handler(req, res) {
     email: data.email,
     organization: data.organization,
     created_at: data.created_at,
+    qr_token: data.qr_token,
   });
 };

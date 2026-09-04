@@ -1,0 +1,66 @@
+/* ---------- QR CARD (shared: complete.html, lookup.html) ---------- */
+
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 24px 20px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+.qr-heading {
+  margin: 0;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--white);
+}
+
+.qr-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: #ffffff;
+  line-height: 0;
+}
+
+.qr-box canvas {
+  width: 220px;
+  height: 220px;
+}
+
+.qr-caption {
+  margin: 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.3px;
+  text-align: center;
+  color: var(--gray-muted);
+}
+
+.qr-missing {
+  width: 100%;
+}
+
+.qr-missing-text {
+  margin: 0;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--row-light);
+  border: 1px solid var(--card-border);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--gray-muted);
+}
+
+.qr-missing-text a {
+  color: #0ae9e0;
+}

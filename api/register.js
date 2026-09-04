@@ -43,13 +43,14 @@ module.exports = async function handler(req, res) {
 
   let error;
   for (let attempt = 0; attempt < MAX_QR_TOKEN_ATTEMPTS; attempt++) {
+    const qrToken = generateQrToken();
     ({ error } = await supabase.from('registrations').insert({
       ...baseRecord,
-      qr_token: generateQrToken(),
+      qr_token: qrToken,
     }));
 
     if (!error) {
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, qr_token: qrToken });
     }
     // Astronomically unlikely, but retry with a fresh token if the random
     // value happened to collide with an existing one; any other error
