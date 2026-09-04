@@ -7,6 +7,11 @@
   const qrCard = document.getElementById('qr-card');
   let currentRecord = null;
 
+  const prefillPhone = new URLSearchParams(window.location.search).get('phone');
+  if (prefillPhone) {
+    form.phone.value = prefillPhone;
+  }
+
   function formatPhone(phone) {
     const digits = (phone || '').replace(/\D/g, '');
     if (digits.length === 11) {

@@ -1,5 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
+const { normalizePhone } = require('../lib/phone');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -40,6 +41,29 @@ module.exports = async function handler(req, res) {
     organization: org ? String(org).trim() : null,
     position: position ? String(position).trim() : null,
   };
+
+  const normalizedInputPhone = normalizePhone(baseRecord.phone);
+
+  const { data: activeRecords, error: dupCheckError } = await supabase
+    .from('registrations')
+    .select('phone')
+    .neq('status', 'cancelled');
+
+  if (dupCheckError) {
+    console.error('Supabase duplicate-check error:', dupCheckError);
+    return res.status(500).json({ error: '등록 처리 중 오류가 발생했습니다.' });
+  }
+
+  const isDuplicate = (activeRecords || []).some(
+    (r) => normalizePhone(r.phone) === normalizedInputPhone
+  );
+
+  if (isDuplicate) {
+    return res.status(409).json({
+      error: '이미 사전등록이 완료된 전화번호입니다.',
+      duplicate: true,
+    });
+  }
 
   let error;
   for (let attempt = 0; attempt < MAX_QR_TOKEN_ATTEMPTS; attempt++) {

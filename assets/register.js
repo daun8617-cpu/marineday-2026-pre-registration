@@ -33,6 +33,14 @@
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
+
+        if (res.status === 409 && body.duplicate) {
+          alert(body.error || '이미 사전등록이 완료된 전화번호입니다.');
+          const lookupParams = new URLSearchParams({ phone: data.phone });
+          window.location.href = 'lookup.html?' + lookupParams.toString();
+          return;
+        }
+
         throw new Error(body.error || '등록에 실패했습니다.');
       }
 

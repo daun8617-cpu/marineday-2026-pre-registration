@@ -31,6 +31,19 @@
   border: 1px solid var(--admin-border);
 }
 
+.admin-checkin-start-btn {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: var(--admin-accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 .admin-checkin-manual {
   display: flex;
   gap: 8px;
