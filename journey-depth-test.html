@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>Journey 3D Depth Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="stylesheet" href="assets/journey-depth-test.css" />
+</head>
+<body>
+
+  <div class="jt-progress" id="jtProgress">[00%]</div>
+
+  <section class="jt-stage" id="jtStage">
+    <canvas id="jtCanvas" class="jt-canvas"></canvas>
+
+    <div class="jt-ui">
+      <div class="jt-timeline-wrap">
+        <div class="jt-timeline-track" id="jtTrack">
+          <div class="jt-year" data-index="0">2016</div>
+          <div class="jt-year" data-index="1">2017</div>
+          <div class="jt-year" data-index="2">2018</div>
+        </div>
+        <div class="jt-timeline-marker" aria-hidden="true"></div>
+      </div>
+
+      <div class="jt-desc" id="jtDesc">
+        <p class="jt-desc-text" data-index="0">Placeholder description text for 2016.</p>
+        <p class="jt-desc-text" data-index="1">Placeholder description text for 2017.</p>
+        <p class="jt-desc-text" data-index="2">Placeholder description text for 2018.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="assets/journey-depth-test.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #000000;
+  color: #ffffff;
+}
+
+body {
+  font-family: "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cd-progress {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 30;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #888888;
+}
+
+/* ================= FIXED HEADER (constant across all slides, exact Figma values) ================= */
+
+.cd-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.cd-part-badge {
+  position: absolute;
+  left: 5.26vw;
+  top: 2.292vw;
+  width: 6.302vw;
+  height: 2.5vw;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(124.44deg, rgb(10, 233, 224) 0.94%, rgb(54, 120, 180) 97.19%);
+  font-weight: 600;
+  font-size: 1.042vw;
+  letter-spacing: -0.026vw;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.cd-part-title {
+  position: absolute;
+  left: 13.281vw;
+  top: 3.828vw;
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 1.823vw;
+  letter-spacing: -0.0456vw;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+.cd-part-sub {
+  position: absolute;
+  left: 26.771vw;
+  top: 4.01vw;
+  transform: translateY(-50%);
+  font-weight: 200;
+  font-size: 1.771vw;
+  letter-spacing: -0.0443vw;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* ================= 3D STAGE ================= */
+
+.cd-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  perspective: 72.92vw; /* 1400px at 1920px reference width */
+  perspective-origin: 50% 50%;
+}
+
+.cd-space {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cd-slide {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* ---- photo layer ---- */
+
+.cd-photo {
+  position: absolute;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.cd-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cd-photo--overview { left: 40.469vw; top: 12.292vw; width: 59.531vw; height: 43.958vw; }
+.cd-photo--s1        { left: 48.958vw; top: 12.292vw; width: 51.042vw; height: 33.802vw; }
+.cd-photo--s2a        { left: 5.26vw;  top: 10.521vw; width: 46.042vw; height: 16.146vw; }
+.cd-photo--s2b        { left: 5.26vw;  top: 28.125vw; width: 46.042vw; height: 16.146vw; }
+
+/* ---- text layer ----
+   Moves on the Y axis only (mask-style reveal / exit), independent
+   of the photo & year layers' Z-depth travel. */
+
+.cd-text {
+  position: absolute;
+  overflow: hidden; /* masks the inner block as it slides past */
+}
+
+.cd-text--overview { left: 5.833vw; top: 20vw; width: 40vw; height: 20vw; }
+.cd-text--s1        { left: 5.833vw; top: 17vw; width: 45vw; height: 22vw; }
+
+.cd-title {
+  margin: 0;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.cd-title--overview {
+  font-size: 6.25vw;
+  line-height: 6.25vw;
+  letter-spacing: -0.156vw;
+}
+
+.cd-title--s1 {
+  font-size: 5.208vw;
+  line-height: 6.25vw;
+  letter-spacing: -0.13vw;
+}
+
+.cd-sub {
+  margin: 1.1vw 0 0;
+  font-weight: 400;
+  font-size: 1.302vw;
+  letter-spacing: -0.033vw;
+  color: #ffffff;
+}
+
+.cd-desc {
+  margin: 1.35vw 0 0;
+  width: 41.094vw;
+  font-weight: 500;
+  font-size: 1.667vw;
+  line-height: 1.4;
+  letter-spacing: -0.042vw;
+  color: #ffffff;
+  text-shadow: 0.156vw 0.156vw 1.042vw rgba(0, 0, 0, 0.5);
+}
+
+.cd-tags {
+  margin: 1.15vw 0 0;
+  font-weight: 500;
+  font-size: 1.146vw;
+  letter-spacing: -0.029vw;
+  color: #00b8ee;
+  white-space: nowrap;
+}
+
+/* ---- year layer (background, Z-depth) ---- */
+
+.cd-year {
+  position: absolute;
+  margin: 0;
+  font-weight: 700;
+  font-size: 8.854vw;
+  letter-spacing: -0.221vw;
+  color: rgba(41, 203, 232, 0.5);
+  transform-style: preserve-3d;
+  white-space: nowrap;
+}
+
+.cd-year--overview { left: 16.667vw; top: 47.031vw; transform: translateY(-50%); }
+.cd-year--s1        { left: 35.625vw; top: 45.313vw; transform: translateY(-50%); }
