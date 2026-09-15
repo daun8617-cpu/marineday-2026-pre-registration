@@ -38,7 +38,7 @@ module.exports = async function handler(req, res) {
     name: String(name).trim(),
     phone: String(phone).trim(),
     email: String(email).trim(),
-    organization: org ? String(org).trim() : null,
+    organization: org ? String(org).trim() : '',
     position: position ? String(position).trim() : null,
   };
 
