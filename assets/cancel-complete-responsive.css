@@ -1,0 +1,168 @@
+/* cancel-complete.html 전용 반응형 스타일. complete-responsive.css 와 같은 기준이다.
+   공용 style.css / register.css / complete.css / cancel-complete.css 는 그대로 두고, body.cancel-complete 범위 안에서만 덮어쓴다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상) 레이아웃이다. */
+
+html:has(.cancel-complete) {
+  background: #08111f;
+}
+
+/* 메인 페이지(index.css)와 같은 톤으로 공용 색상 변수를 바꾼다 */
+.cancel-complete {
+  --bg: #08111f;
+  --card-bg: #0c1628;
+  --card-border: rgba(255, 255, 255, 0.14);
+  --row-light: rgba(20, 45, 79, 0.5);
+  --teal-200: #93e7ff;
+  --gray-muted: #4a7aaa;
+  background: var(--bg);
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.cancel-complete .page {
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.cancel-complete .complete-body,
+.cancel-complete .complete-footer {
+  width: min(100%, 528px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- COMPLETE BODY ---------- */
+
+.cancel-complete .complete-body {
+  gap: 28px;
+  padding: 56px 24px 0;
+}
+
+.cancel-complete .complete-badge-inner {
+  background: var(--bg);
+}
+
+.cancel-complete .complete-title {
+  font-size: clamp(22px, 6.1vw, 28px);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+}
+
+/* ---------- SUMMARY / EVENT ---------- */
+
+.cancel-complete .summary-card {
+  border-radius: 20px;
+}
+
+.cancel-complete .summary-row {
+  align-items: flex-start;
+  gap: 12px;
+  white-space: normal;
+}
+
+.cancel-complete .summary-key {
+  flex-shrink: 0;
+}
+
+.cancel-complete .summary-value {
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.cancel-complete .event-card {
+  border-radius: 16px;
+}
+
+/* ---------- FOOTER ---------- */
+
+.cancel-complete .complete-footer {
+  padding: 32px 24px calc(32px + env(safe-area-inset-bottom));
+}
+
+.cancel-complete .submit-btn {
+  height: 56px;
+  border-radius: 100px;
+  background: linear-gradient(169.57deg, #0ae9e0 0.94%, #3678b4 97.19%);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+
+.cancel-complete .cancel-complete-caption {
+  margin-top: 0;
+  font-size: 13px;
+  color: var(--gray-muted);
+  word-break: keep-all;
+}
+
+/* ==========================================================
+   PC (1024px 이상): 1200px 콘텐츠 영역 가운데에 600px 취소 완료 카드
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  .cancel-complete {
+    display: flex;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  /* .page 자체가 취소 완료 카드가 된다 */
+  .cancel-complete .page {
+    width: min(600px, 100%);
+    min-height: 0;
+    margin: auto;
+    padding: 56px 52px 44px;
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--card-bg);
+  }
+
+  .cancel-complete .complete-body,
+  .cancel-complete .complete-footer {
+    width: 100%;
+  }
+
+  .cancel-complete .complete-body {
+    gap: 32px;
+    padding: 0;
+  }
+
+  .cancel-complete .complete-badge-inner {
+    background: var(--card-bg);
+  }
+
+  .cancel-complete .complete-title {
+    font-size: 32px;
+  }
+
+  /* 카드 안의 카드는 한 단계 밝은 색으로 */
+  .cancel-complete .summary-card {
+    padding: 24px;
+    background: var(--row-light);
+  }
+
+  .cancel-complete .summary-key,
+  .cancel-complete .event-label {
+    font-size: 14px;
+  }
+
+  .cancel-complete .summary-value,
+  .cancel-complete .event-value {
+    font-size: 16px;
+  }
+
+  .cancel-complete .complete-footer {
+    margin-top: 40px;
+    padding: 0;
+  }
+
+  .cancel-complete .submit-btn {
+    height: 60px;
+  }
+
+  .cancel-complete .cancel-complete-caption {
+    font-size: 14px;
+  }
+}

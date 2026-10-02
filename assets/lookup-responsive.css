@@ -1,0 +1,200 @@
+/* lookup.html 전용 반응형 스타일. register-responsive.css 와 같은 기준이다.
+   공용 style.css / register.css / qr-card.css / lookup.css 는 그대로 두고, body.lookup 범위 안에서만 덮어쓴다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상) 레이아웃이다. */
+
+html:has(.lookup) {
+  background: #08111f;
+}
+
+/* 메인 페이지(index.css)와 같은 톤으로 공용 색상 변수를 바꾼다 */
+.lookup {
+  --bg: #08111f;
+  --card-bg: #0c1628;
+  --card-border: rgba(255, 255, 255, 0.14);
+  --row-light: rgba(20, 45, 79, 0.5);
+  --teal-200: #93e7ff;
+  --gray-muted: #4a7aaa;
+  background: var(--bg);
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.lookup .page {
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.lookup .reg-header,
+.lookup .reg-form {
+  width: min(100%, 528px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- HEADER ---------- */
+
+.lookup .reg-header {
+  margin-top: 20px;
+  padding: 0 24px;
+}
+
+/* 버튼 안의 화살표가 좌우 24px 여백선에 맞도록 */
+.lookup .back-button {
+  margin-left: -10px;
+}
+
+.lookup .reg-header-spacer {
+  margin-right: -10px;
+}
+
+/* ---------- FORM ---------- */
+
+.lookup .reg-form {
+  gap: 32px;
+  padding: 20px 24px 24px;
+}
+
+.lookup .badge {
+  background: #3780d9;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.lookup .reg-title {
+  font-size: clamp(22px, 6.1vw, 28px);
+  letter-spacing: -0.025em;
+}
+
+.lookup .field-input {
+  height: 48px;
+  border-radius: 14px;
+}
+
+.lookup .field-input::placeholder {
+  color: rgba(232, 244, 255, 0.4);
+}
+
+/* ---------- SUBMIT FOOTER ---------- */
+
+.lookup .submit-btn {
+  height: 56px;
+  border-radius: 100px;
+  background: linear-gradient(169.57deg, #0ae9e0 0.94%, #3678b4 97.19%);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+
+/* ---------- RESULT / QR / CANCEL ---------- */
+
+.lookup .result-card {
+  padding: 20px;
+  border-radius: 24px;
+  background: var(--row-light);
+}
+
+.lookup .result-row {
+  align-items: flex-start;
+}
+
+.lookup .result-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.lookup .qr-card {
+  padding: 20px 12px; /* QR 코드가 393px 에서 220px 그대로 들어가도록 */
+  border-radius: 20px;
+}
+
+/* QR 라이브러리가 canvas 에 인라인 크기(220px)를 넣으므로, 좁은 화면에서 찌그러지지 않게 높이를 강제로 비율에 맞춘다 */
+.lookup .qr-box canvas {
+  max-width: 100%;
+  height: auto !important;
+  aspect-ratio: 1;
+}
+
+.lookup .cancel-btn {
+  height: 56px;
+  border-radius: 100px;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+
+.lookup .cancel-caption {
+  color: var(--gray-muted);
+}
+
+/* ==========================================================
+   PC (1024px 이상): 1200px 콘텐츠 영역 가운데에 600px 폼 카드
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  /* 내용이 화면보다 짧으면 세로 가운데에 둔다 (complete.html 과 같은 기준) */
+  .lookup .page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: min(1200px, 100% - 80px);
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+
+  .lookup .reg-header,
+  .lookup .reg-form {
+    width: min(600px, 100%);
+  }
+
+  .lookup .reg-header {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .lookup .reg-header-title {
+    font-size: 24px;
+    letter-spacing: -0.6px;
+  }
+
+  .lookup .reg-form {
+    margin-top: 24px;
+    gap: 40px;
+    padding: 48px 52px 44px;
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--card-bg);
+  }
+
+  .lookup .reg-title {
+    font-size: 32px;
+  }
+
+  .lookup .reg-fields {
+    gap: 20px;
+  }
+
+  .lookup .field-input {
+    height: 52px;
+  }
+
+  .lookup .submit-btn {
+    height: 60px;
+  }
+
+  .lookup .result-card {
+    padding: 32px;
+  }
+
+  .lookup .qr-card {
+    padding: 24px 20px;
+  }
+
+  .lookup .cancel-btn {
+    height: 60px;
+  }
+
+  .lookup .cancel-caption {
+    font-size: 14px;
+  }
+}

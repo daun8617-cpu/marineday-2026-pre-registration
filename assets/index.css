@@ -1,0 +1,1197 @@
+/* index.html 전용 스타일. 기본값은 PC(1920px 시안, 콘텐츠 최대 1200px)이고,
+   파일 끝의 미디어 쿼리가 1023px 이하에서 모바일(393px 기준) 레이아웃으로 바꾼다. */
+
+html:has(.home) {
+  scroll-behavior: smooth;
+  background: #08111f;
+}
+
+.home {
+  --home-bg: #08111f;
+  --home-text: #e8f4ff;
+  --home-sky: #93e7ff;
+  --home-muted: #4a7aaa;
+  --home-line: rgba(255, 255, 255, 0.25);
+  --home-line-soft: rgba(255, 255, 255, 0.14);
+  background: var(--home-bg);
+}
+
+.home-page {
+  position: relative;
+  overflow-x: clip; /* AX 글로우가 좁은 화면에서 가로 스크롤을 만들지 않도록 */
+  background: var(--home-bg);
+  color: var(--white);
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+  line-height: normal;
+}
+
+.home-container {
+  width: min(1200px, 100% - 80px);
+  margin: 0 auto;
+}
+
+/* ---------- HERO ---------- */
+
+.home-hero {
+  position: relative;
+  padding-top: 177px;
+}
+
+.home-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1008px;
+  overflow: hidden;
+}
+
+.home-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-hero-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 508px;
+  height: 502px;
+  background: linear-gradient(to bottom, rgba(8, 17, 31, 0) 12.95%, var(--home-bg) 49.69%);
+  pointer-events: none;
+}
+
+.home-logo {
+  position: absolute;
+  z-index: 2;
+  top: 45px;
+  left: min(58px, 3vw);
+  width: 265px;
+  height: auto;
+}
+
+.home-nav {
+  position: absolute;
+  z-index: 2;
+  top: 47px;
+  right: min(63px, 3.3vw);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-pill {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.25));
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.55px;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.home-nav .home-pill {
+  backdrop-filter: blur(12px);
+}
+
+.home-nav .home-pill:first-child {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.home-nav .home-pill:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.home-pill--theme {
+  background: rgba(32, 75, 147, 0.4);
+}
+
+.home-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-emblem {
+  position: relative;
+  width: 182px;
+  aspect-ratio: 182 / 114;
+}
+
+.home-emblem img {
+  position: absolute;
+  max-width: none;
+}
+
+.home-emblem-ship {
+  left: 22.01%;
+  top: 0;
+  width: 71.3%;
+}
+
+.home-emblem-accent {
+  left: 66.21%;
+  top: 58.74%;
+  width: 9.71%;
+}
+
+.home-emblem-text {
+  left: 0;
+  top: 90.2%;
+  width: 100%;
+}
+
+.home-title {
+  margin: 3px 0 0;
+  height: 134px;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 31px;
+  font-family: "Manrope", "Pretendard Variable", "Pretendard", sans-serif;
+  line-height: 134px;
+  white-space: nowrap;
+}
+
+.home-title-main {
+  font-weight: 800;
+  font-size: 100px;
+  letter-spacing: -2.5px;
+  color: var(--white);
+}
+
+.home-title-year {
+  font-weight: 400;
+  font-size: 105px;
+  letter-spacing: -2.625px;
+  color: var(--home-sky);
+}
+
+.home-theme {
+  margin-top: 122px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-theme-head {
+  margin: 31px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.2714em;
+  font-size: 70px;
+}
+
+.home-theme-text {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--white);
+  text-shadow: 3px 3px 20px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+.home-ax {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.0159em;
+  height: 1.0375em;
+}
+
+.home-ax img {
+  position: absolute;
+  max-width: none;
+}
+
+.home-ax-mark {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.home-ax-glow {
+  left: -105.55%;
+  top: -204.46%;
+  width: 312.6%;
+  height: 513.07%;
+  pointer-events: none;
+}
+
+.home-years {
+  margin-top: -16px;
+  width: min(1147px, 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: "Manrope", "Pretendard Variable", "Pretendard", sans-serif;
+  font-weight: 500;
+  font-size: 50px;
+  line-height: 1.2;
+  letter-spacing: -1.25px;
+  white-space: nowrap;
+}
+
+.home-years-from {
+  color: #9f9f9f;
+}
+
+.home-years-to {
+  color: var(--home-sky);
+}
+
+.home-years-line {
+  flex: 0 1 700px;
+  min-width: 0;
+  height: 3px;
+  margin-top: 38px;
+}
+
+.home-theme-sub {
+  margin: 11px 0 0;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.3;
+  letter-spacing: -1px;
+  text-align: center;
+  color: var(--white);
+}
+
+/* ---------- DATE / VENUE ---------- */
+
+.home-info {
+  position: relative;
+  z-index: 1;
+  margin-top: 269px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(24px, 6vw, 94px);
+}
+
+.home-info-card {
+  min-height: 229px;
+  border-radius: 32px;
+  border: 1px solid var(--home-line-soft);
+  background: rgba(15, 35, 64, 0.5);
+  overflow: hidden;
+}
+
+.home-info-label {
+  margin: 0;
+  height: 64px;
+  padding: 20px 48px 0;
+  border-bottom: 1px solid var(--home-line-soft);
+  background: #0d2040;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.45px;
+  text-transform: uppercase;
+}
+
+.home-info-body {
+  padding: 33px 48px 37px;
+}
+
+.home-info-main {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(30px, 3.2vw, 40px);
+  line-height: 1.3;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}
+
+.home-info-sub {
+  margin: 14px 0 0;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -0.55px;
+  color: #90e2fa;
+}
+
+/* ---------- SECTION 공통 ---------- */
+
+.home-section {
+  margin-top: 130px;
+  scroll-margin-top: 40px;
+}
+
+.home-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 46px;
+}
+
+.home-section-title {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 42px;
+  font-weight: 600;
+  font-size: 42px;
+  line-height: 1.3;
+  letter-spacing: -1.05px;
+  white-space: nowrap;
+}
+
+.home-section-no {
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+
+.home-section-desc {
+  margin: 0;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.45px;
+  color: #999999;
+}
+
+.home-textbox {
+  border-radius: 32px;
+  border: 1px solid var(--home-line-soft);
+  background: rgba(19, 39, 65, 0.5);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.5;
+  letter-spacing: -0.55px;
+}
+
+.home-textbox p {
+  margin: 0;
+}
+
+.home-textbox--welcome {
+  padding: 43px 50px 23px;
+}
+
+.home-textbox--dinner {
+  padding: 37px 50px 29px;
+  text-align: center;
+}
+
+/* ---------- SCHEDULE ---------- */
+
+.home-schedule {
+  border-radius: 32px;
+  border: 1px solid var(--home-line-soft);
+  overflow: hidden;
+}
+
+.home-schedule-head,
+.home-row {
+  display: grid;
+  grid-template-columns: 121px minmax(0, 613px) minmax(170px, 1fr);
+  column-gap: clamp(32px, 4.7vw, 60px);
+  align-items: center;
+  padding: 0 clamp(32px, 4.4vw, 56px);
+}
+
+.home-schedule-head {
+  height: 64px;
+  background: #0d2040;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.45px;
+}
+
+.home-row {
+  min-height: 119px;
+  border-top: 1px solid var(--home-line-soft);
+  background: rgba(21, 35, 61, 0.3);
+  color: var(--home-text);
+}
+
+a.home-row:hover {
+  background: rgba(40, 68, 118, 0.4);
+}
+
+.home-row-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.home-badge {
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: #3780d9;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.home-row-clock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.home-row-min {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--home-muted);
+}
+
+.home-row-min::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: #3b82f6;
+}
+
+.home-row-program {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-row-title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.home-row-tag {
+  font-size: 13px;
+  color: #6a9cc0;
+}
+
+.home-row-speaker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.home-row-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.home-row-org {
+  font-size: 12px;
+  color: var(--home-muted);
+}
+
+.home-row--event .home-badge,
+.home-row--event .home-row-min::before {
+  background: #ce7c0a;
+}
+
+.home-row--event .home-row-min {
+  color: #ce7c0a;
+}
+
+.home-row--break {
+  background: rgba(21, 61, 56, 0.3);
+}
+
+.home-row--break .home-badge,
+.home-row--break .home-row-min::before {
+  background: #409f6f;
+}
+
+.home-row--break .home-row-min {
+  color: #409f6f;
+}
+
+/* ---------- SESSIONS ---------- */
+
+.home-sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.home-session {
+  display: flex;
+  flex-direction: column;
+  gap: 47px;
+  padding: 44px clamp(28px, 4.1vw, 52px) 35px;
+  border-radius: 35px;
+  border: 1px solid var(--home-line);
+  background: #0c1628;
+  scroll-margin-top: 40px;
+}
+
+.home-session-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 65px;
+  padding: 0 37px 0 19px;
+  border-radius: 100px;
+  border: 1px solid rgba(207, 222, 255, 0.25);
+  background: rgba(20, 45, 79, 0.5);
+}
+
+.home-session-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+}
+
+.home-session-badge {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #3b7bf8;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.home-session-topic {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--home-text);
+}
+
+.home-session-time {
+  flex-shrink: 0;
+  font-weight: 500;
+  font-size: 16px;
+  color: #3b7bf8;
+  white-space: nowrap;
+}
+
+.home-session-body {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(28px, 3.6vw, 46px);
+}
+
+.home-speaker {
+  flex-shrink: 0;
+  width: 238px;
+  height: 238px;
+  padding: 25px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  border-radius: 35px;
+  border: 1px solid var(--home-line);
+  background: rgba(14, 30, 55, 0.8);
+  text-align: center;
+}
+
+.home-speaker-photo {
+  width: 123px;
+  height: 123px;
+}
+
+.home-speaker-name {
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--white);
+}
+
+.home-speaker-org {
+  margin: 9px 0 0;
+  font-size: 16px;
+  color: var(--home-muted);
+}
+
+.home-session-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-session-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(30px, 2.8vw, 36px);
+  color: var(--white);
+}
+
+.home-session-abstract {
+  margin-top: 24px;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--home-text);
+}
+
+.home-session-abstract p {
+  margin: 0;
+}
+
+.home-session-abstract p + p {
+  margin-top: 30px;
+}
+
+/* ---------- DIRECTIONS ---------- */
+
+.home-directions {
+  display: grid;
+  grid-template-columns: 778fr 347fr;
+  column-gap: clamp(32px, 5.5vw, 70px);
+  align-items: start;
+}
+
+.home-map-card {
+  padding: 34px 29px 17px;
+  border-radius: 35px;
+  border: 1px solid var(--home-line);
+  background: #0c1628;
+}
+
+.home-map {
+  position: relative;
+  display: block;
+  aspect-ratio: 720 / 330;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.home-map-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.home-map-pin {
+  position: absolute;
+  left: 53.33%;
+  top: 54.24%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--pin);
+  filter: drop-shadow(0px 6px 7px rgba(0, 0, 0, 0.4));
+}
+
+.home-map-name {
+  margin: 20px 0 0 11px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+
+.home-map-address {
+  margin: 9px 0 0 11px;
+  font-size: 16px;
+  color: var(--home-muted);
+}
+
+.home-transport {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.7;
+  letter-spacing: -0.5px;
+}
+
+.home-transport p {
+  margin: 0;
+}
+
+.home-transport ul {
+  margin: 0;
+  padding: 0 0 0 30px;
+  list-style: disc;
+}
+
+/* ---------- FOOTER CTA ---------- */
+
+.home-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  margin-top: 30px;
+  padding: 44.5px 0 38.5px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+}
+
+.home-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 60px;
+  border-radius: 100px;
+  overflow: hidden;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(169.57deg, #0ae9e0 0.94%, #3678b4 97.19%);
+  font-weight: 600;
+  text-align: center;
+}
+
+.home-cta-title {
+  height: 30.8px;
+  font-size: 26px;
+  line-height: 1.3;
+  letter-spacing: -0.65px;
+  color: var(--white);
+}
+
+.home-cta-sub {
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: -0.35px;
+  color: #000000;
+}
+
+/* ==========================================================
+   MOBILE (1023px 이하, 393px 기준)
+   --u 는 320px~560px 사이에서 화면 폭을 따라가는 기준 폭으로,
+   히어로 영역 크기는 (393px 기준 값) × --u / 393 으로 계산한다.
+   ========================================================== */
+
+@media (max-width: 1023px) {
+  .home {
+    --u: clamp(320px, 100vw, 560px);
+  }
+
+  .home-container {
+    width: min(720px, 100% - 48px); /* 좌우 여백 24px */
+  }
+
+  /* ---------- HERO ---------- */
+
+  .home-hero {
+    padding-top: calc(var(--u) * 91 / 393);
+  }
+
+  .home-hero-bg {
+    height: calc(var(--u) * 520 / 393);
+  }
+
+  .home-hero-gradient {
+    top: 50%;
+    height: 50%;
+  }
+
+  .home-logo {
+    top: 20px;
+    left: 24px;
+    width: clamp(120px, 38vw, 180px);
+  }
+
+  .home-nav {
+    top: 20px;
+    right: 24px;
+    gap: 8px;
+  }
+
+  .home-pill {
+    padding: 6px 12px;
+    font-size: 13px;
+    letter-spacing: -0.325px;
+  }
+
+  .home-emblem {
+    width: calc(var(--u) * 113 / 393);
+  }
+
+  .home-title {
+    margin-top: calc(var(--u) * 10 / 393);
+    height: calc(var(--u) * 54 / 393);
+    gap: calc(var(--u) * 11 / 393);
+    line-height: calc(var(--u) * 54 / 393);
+  }
+
+  .home-title-main {
+    font-size: calc(var(--u) * 38 / 393);
+    letter-spacing: -0.025em;
+  }
+
+  .home-title-year {
+    font-size: calc(var(--u) * 40 / 393);
+    letter-spacing: -0.025em;
+  }
+
+  .home-theme {
+    margin-top: calc(var(--u) * 52 / 393);
+  }
+
+  .home-pill--theme {
+    font-size: 14px;
+  }
+
+  .home-theme-head {
+    margin-top: calc(var(--u) * 18 / 393);
+    font-size: calc(var(--u) * 26 / 393);
+  }
+
+  .home-years {
+    margin-top: calc(var(--u) * 8 / 393);
+    gap: 12px;
+    font-size: calc(var(--u) * 20 / 393);
+    letter-spacing: -0.025em;
+  }
+
+  .home-years-line {
+    flex: 1 1 0;
+    height: 2px;
+    margin-top: 0.6em;
+  }
+
+  .home-theme-sub {
+    margin: calc(var(--u) * 14 / 393) auto 0;
+    max-width: calc(var(--u) * 300 / 393);
+    font-size: calc(var(--u) * 15 / 393);
+    line-height: 1.45;
+    letter-spacing: -0.025em;
+    word-break: keep-all;
+  }
+
+  /* ---------- DATE / VENUE ---------- */
+
+  .home-info {
+    margin-top: calc(var(--u) * 64 / 393);
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+  }
+
+  .home-info-card {
+    min-height: 0;
+    border-radius: 20px;
+  }
+
+  .home-info-label {
+    height: 44px;
+    padding: 13px 20px 0;
+    font-size: 14px;
+    letter-spacing: -0.35px;
+  }
+
+  .home-info-body {
+    padding: 18px 20px 20px;
+  }
+
+  .home-info-main {
+    font-size: clamp(21px, 6.1vw, 28px);
+    letter-spacing: -0.6px;
+  }
+
+  .home-info-sub {
+    margin-top: 6px;
+    font-size: 15px;
+    letter-spacing: -0.375px;
+  }
+
+  /* ---------- SECTION 공통 ---------- */
+
+  .home-section {
+    margin-top: 80px;
+    scroll-margin-top: 20px;
+  }
+
+  .home-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .home-section-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 26px;
+    letter-spacing: -0.65px;
+  }
+
+  .home-section-no {
+    font-size: 13px;
+    letter-spacing: -0.325px;
+  }
+
+  .home-section-desc {
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: -0.325px;
+    word-break: keep-all;
+  }
+
+  .home-textbox {
+    border-radius: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: -0.375px;
+    word-break: keep-all;
+  }
+
+  .home-textbox--welcome,
+  .home-textbox--dinner {
+    padding: 22px 20px;
+  }
+
+  /* ---------- SCHEDULE: 표 → 세로 카드 ---------- */
+
+  .home-schedule {
+    border-radius: 20px;
+  }
+
+  .home-schedule-head {
+    display: none;
+  }
+
+  .home-row {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+    min-height: 0;
+    padding: 16px 18px;
+  }
+
+  .home-row:first-child {
+    border-top: 0;
+  }
+
+  .home-row-time {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+  }
+
+  .home-row-clock {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .home-row-program {
+    gap: 4px;
+  }
+
+  .home-row-title {
+    font-size: 16px;
+    word-break: keep-all;
+  }
+
+  .home-row-tag {
+    font-size: 12px;
+  }
+
+  .home-row-speaker {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 8px;
+    white-space: normal;
+  }
+
+  .home-row-name {
+    font-size: 14px;
+  }
+
+  /* ---------- SESSIONS ---------- */
+
+  .home-sessions {
+    gap: 20px;
+  }
+
+  .home-session {
+    gap: 20px;
+    padding: 16px 16px 22px;
+    border-radius: 24px;
+    scroll-margin-top: 20px;
+  }
+
+  .home-session-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: 0;
+    padding: 14px 16px;
+    border-radius: 18px;
+  }
+
+  .home-session-bar-left {
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+
+  .home-session-topic {
+    font-size: 15px;
+    word-break: keep-all;
+  }
+
+  .home-session-time {
+    font-size: 14px;
+  }
+
+  .home-session-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .home-speaker {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 20px;
+    text-align: left;
+  }
+
+  .home-speaker-photo {
+    width: 72px;
+    height: 72px;
+  }
+
+  .home-speaker-name {
+    font-size: 17px;
+  }
+
+  .home-speaker-org {
+    margin-top: 4px;
+    font-size: 14px;
+  }
+
+  .home-session-title {
+    font-size: 22px;
+    word-break: keep-all;
+  }
+
+  .home-session-abstract {
+    margin-top: 14px;
+    font-size: 15px;
+    word-break: keep-all;
+  }
+
+  .home-session-abstract p + p {
+    margin-top: 16px;
+  }
+
+  /* ---------- DIRECTIONS ---------- */
+
+  .home-directions {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+
+  .home-map-card {
+    padding: 14px 14px 18px;
+    border-radius: 24px;
+  }
+
+  .home-map {
+    border-radius: 14px;
+  }
+
+  .home-map-name {
+    margin: 14px 0 0 4px;
+    font-size: 17px;
+    letter-spacing: -0.425px;
+  }
+
+  .home-map-address {
+    margin: 6px 0 0 4px;
+    font-size: 13px;
+    word-break: keep-all;
+  }
+
+  .home-transport {
+    font-size: 15px;
+    letter-spacing: -0.375px;
+  }
+
+  .home-transport ul {
+    padding-left: 22px;
+  }
+
+  /* ---------- FOOTER CTA ---------- */
+
+  .home-footer {
+    margin-top: 24px;
+    padding: 14px 0 calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .home-cta {
+    gap: 2px;
+    height: 56px;
+  }
+
+  .home-cta-title {
+    height: auto;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .home-cta-sub {
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+}
+
+/* 767px 이하: 메인 타이틀을 두 줄(MARINE DAY / 2026)로 */
+@media (max-width: 767px) {
+  .home-hero-bg {
+    height: calc(var(--u) * 680 / 393); /* 수평선이 2026 아래로 오도록 */
+  }
+
+  .home-title {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    height: auto;
+    line-height: 1.15;
+  }
+
+  .home-title-main {
+    font-size: calc(var(--u) * 45 / 393);
+  }
+
+  .home-title-year {
+    font-size: calc(var(--u) * 41 / 393);
+  }
+
+  .home-theme {
+    margin-top: calc(var(--u) * 84 / 393);
+  }
+}
+
+/* 1024~1199px: 콘텐츠 폭이 좁아 연도(2016 / 2026)가 테마 문구와 겹치므로 연도 줄을 문구 아래로 내린다 */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .home-years {
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,198 @@
+/* register.html 전용 반응형 스타일.
+   공용 style.css / register.css 는 그대로 두고, body.register 범위 안에서만 덮어쓴다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상) 레이아웃이다. */
+
+html:has(.register) {
+  background: #08111f;
+}
+
+/* 메인 페이지(index.css)와 같은 톤으로 공용 색상 변수를 바꾼다 */
+.register {
+  --bg: #08111f;
+  --card-bg: #0c1628;
+  --card-border: rgba(255, 255, 255, 0.14);
+  --row-light: rgba(20, 45, 79, 0.5);
+  --teal-200: #93e7ff;
+  --gray-muted: #4a7aaa;
+  background: var(--bg);
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.register .page {
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.register .reg-header,
+.register .reg-form {
+  width: min(100%, 528px);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---------- HEADER ---------- */
+
+.register .reg-header {
+  margin-top: 20px;
+  padding: 0 24px;
+}
+
+/* 버튼 안의 화살표가 좌우 24px 여백선에 맞도록 */
+.register .back-button {
+  margin-left: -10px;
+}
+
+.register .reg-header-spacer {
+  margin-right: -10px;
+}
+
+/* ---------- FORM ---------- */
+
+.register .reg-form {
+  gap: 32px;
+  padding: 20px 24px 24px;
+}
+
+.register .badge {
+  background: #3780d9;
+  color: var(--white);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.register .reg-title {
+  font-size: clamp(22px, 6.1vw, 28px);
+  letter-spacing: -0.025em;
+}
+
+.register .field-optional {
+  color: var(--gray-muted);
+}
+
+.register .field-input {
+  height: 48px;
+  border-radius: 14px;
+}
+
+/* register.css 에서 이름 칸만 14px 로 되어 있어 다른 칸(16px)과 맞춘다 */
+.register .field-input#f-name {
+  font-size: 16px;
+  letter-spacing: -0.4px;
+}
+
+.register .field-input::placeholder {
+  color: rgba(232, 244, 255, 0.4);
+}
+
+.register .consent {
+  padding: 14px;
+  border-radius: 14px;
+}
+
+.register .consent-box {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.register .consent-view {
+  color: var(--teal-200);
+}
+
+/* ---------- SUBMIT FOOTER ---------- */
+
+.register .reg-footer {
+  padding: 20px 0 calc(24px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 70%, rgba(8, 17, 31, 0));
+}
+
+.register .submit-btn {
+  height: 56px;
+  border-radius: 100px;
+  background: linear-gradient(169.57deg, #0ae9e0 0.94%, #3678b4 97.19%);
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 20px;
+  letter-spacing: -0.5px;
+}
+
+.register .lookup-link {
+  font-size: 13px;
+  letter-spacing: -0.325px;
+}
+
+/* ==========================================================
+   PC (1024px 이상): 1200px 콘텐츠 영역 가운데에 600px 폼 카드
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  /* 내용이 화면보다 짧으면 세로 가운데에 둔다 (complete.html 과 같은 기준) */
+  .register .page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: min(1200px, 100% - 80px);
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+
+  .register .reg-header,
+  .register .reg-form {
+    width: min(600px, 100%);
+  }
+
+  .register .reg-header {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .register .reg-header-title {
+    font-size: 24px;
+    letter-spacing: -0.6px;
+  }
+
+  .register .reg-form {
+    margin-top: 24px;
+    gap: 40px;
+    padding: 48px 52px 44px;
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: var(--card-bg);
+  }
+
+  .register .reg-title {
+    font-size: 32px;
+  }
+
+  .register .reg-fields {
+    gap: 20px;
+  }
+
+  .register .field-input {
+    height: 52px;
+  }
+
+  .register .consent {
+    padding: 16px;
+  }
+
+  .register .consent-text,
+  .register .consent-view {
+    font-size: 14px;
+  }
+
+  /* PC 에서는 버튼을 화면 아래에 고정하지 않고 카드 안에 둔다 */
+  .register .reg-footer {
+    position: static;
+    gap: 16px;
+    padding: 0;
+    background: none;
+  }
+
+  .register .submit-btn {
+    height: 60px;
+  }
+
+  .register .lookup-link {
+    font-size: 14px;
+  }
+}
