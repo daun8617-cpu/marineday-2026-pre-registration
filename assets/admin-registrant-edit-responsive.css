@@ -1,0 +1,122 @@
+/* admin-registrant-edit.html 전용 반응형 스타일.
+   공용 관리자 CSS(admin-login.css, admin-dashboard.css, admin-registrants.css, admin-registrant-detail.css, admin-registrant-edit.css)는
+   그대로 두고, body.admin-registrant-edit 범위 안에서만 덮어쓴다. 관리자 페이지는 밝은 톤, 글꼴은 모두 Pretendard 다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상, 콘텐츠 최대 1200px) 레이아웃이다. */
+
+.admin-registrant-edit {
+  /* admin-login.css 의 "PretendardVariable" 은 실제로 불러오는 글꼴 이름("Pretendard Variable")과 달라 적용되지 않는다 */
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.admin-registrant-edit button,
+.admin-registrant-edit input {
+  font-family: inherit;
+}
+
+/* ---------- 좌우 여백 24px ---------- */
+
+.admin-registrant-edit .admin-edit-page {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+.admin-registrant-edit .admin-registrants-header {
+  padding: 0 24px 8px;
+}
+
+/* 버튼 안의 화살표가 좌우 24px 여백선에 맞도록 */
+.admin-registrant-edit .admin-back-btn {
+  margin-left: -6px;
+}
+
+.admin-registrant-edit .admin-dashboard-error {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.admin-registrant-edit .admin-edit-body {
+  padding: 0 24px;
+}
+
+.admin-registrant-edit .admin-input-box {
+  height: 52px;
+}
+
+/* 16px 미만이면 iOS 에서 입력 시 화면이 확대된다 */
+.admin-registrant-edit .admin-input {
+  background: transparent;
+  font-size: 16px;
+}
+
+/* ==========================================================
+   PC (1024px 이상): 옅은 회색 배경, 콘텐츠 최대 1200px.
+   흰 카드 안에 입력칸을 2열로 놓고 버튼은 오른쪽 아래에 둔다.
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  html:has(.admin-registrant-edit),
+  .admin-registrant-edit {
+    background: #f1f5f9;
+  }
+
+  .admin-registrant-edit .admin-edit-page {
+    width: min(1200px, 100% - 80px);
+    max-width: none;
+    padding: 40px 0 80px;
+    gap: 28px;
+  }
+
+  .admin-registrant-edit .admin-registrants-header {
+    padding: 0;
+  }
+
+  .admin-registrant-edit .admin-back-btn {
+    width: 40px;
+    height: 40px;
+    margin-left: -10px;
+  }
+
+  .admin-registrant-edit .admin-registrants-title {
+    font-size: 26px;
+    letter-spacing: -0.65px;
+  }
+
+  .admin-registrant-edit .admin-dashboard-error {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .admin-registrant-edit .admin-edit-body {
+    gap: 32px;
+    padding: 36px 40px;
+    border: 1px solid var(--admin-border);
+    border-radius: 20px;
+    background: #ffffff;
+  }
+
+  .admin-registrant-edit .admin-edit-body .admin-form-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  /* 오류 문구는 두 칸을 모두 차지한다 */
+  .admin-registrant-edit .admin-form-fields .admin-error {
+    grid-column: 1 / -1;
+  }
+
+  .admin-registrant-edit .admin-field-label {
+    font-size: 14px;
+  }
+
+  .admin-registrant-edit .admin-edit-bottom-bar {
+    justify-content: flex-end;
+  }
+
+  .admin-registrant-edit .admin-btn-secondary,
+  .admin-registrant-edit .admin-edit-bottom-bar .admin-btn-edit {
+    flex: none;
+    width: 160px;
+    height: 52px;
+    border-radius: 14px;
+  }
+}

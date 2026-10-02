@@ -9,6 +9,7 @@
   const avatarEl = document.getElementById('admin-avatar');
   const nameEl = document.getElementById('admin-profile-name');
   const statusTagEl = document.getElementById('admin-status-tag');
+  const checkinTagEl = document.getElementById('admin-checkin-tag');
   const phoneEl = document.getElementById('admin-info-phone');
   const emailEl = document.getElementById('admin-info-email');
   const orgEl = document.getElementById('admin-info-org');
@@ -89,8 +90,11 @@
 
     const statusInfo = AdminRegistrationStatus.getStatusInfo(record);
     const cancelled = statusInfo.key === 'cancelled';
-    statusTagEl.textContent = statusInfo.label;
+    // Same two-value labels as the registrants list and the CSV export.
+    statusTagEl.textContent = cancelled ? '등록취소' : '등록완료';
     statusTagEl.classList.toggle('cancelled', cancelled);
+    checkinTagEl.textContent = record.checked_in ? '체크인완료' : '미체크인';
+    checkinTagEl.classList.toggle('done', !!record.checked_in);
     deleteBtn.disabled = cancelled;
     deleteBtnLabel.textContent = cancelled ? '취소됨' : '등록취소';
 

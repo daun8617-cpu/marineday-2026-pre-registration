@@ -10,8 +10,9 @@
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
 <link rel="stylesheet" href="assets/admin-login.css" />
 <link rel="stylesheet" href="assets/admin-dashboard.css" />
+<link rel="stylesheet" href="assets/admin-dashboard-responsive.css" />
 </head>
-<body>
+<body class="admin-dashboard">
 <div class="admin-page admin-dashboard-page" id="admin-dashboard-page" hidden>
   <header class="admin-dashboard-header">
     <p class="admin-dashboard-title">사전등록 관리</p>
@@ -80,9 +81,20 @@
             </div>
             <p class="admin-kpi-label">체크인율</p>
           </div>
-          <p class="admin-kpi-value" id="admin-kpi-checkin-rate">-</p>
+          <div class="admin-kpi-value-row">
+            <p class="admin-kpi-count" id="admin-kpi-checkin-count">-</p>
+            <p class="admin-kpi-value" id="admin-kpi-checkin-rate">-</p>
+          </div>
         </div>
       </div>
+    </section>
+
+    <section class="admin-members-section">
+      <div class="admin-section-header">
+        <p class="admin-section-title">최근 사전등록자</p>
+        <a class="admin-section-link" href="admin-registrants.html">전체보기</a>
+      </div>
+      <div class="admin-members-list" id="admin-members-list"></div>
     </section>
 
     <section class="admin-chart-section">
@@ -108,14 +120,6 @@
         </div>
         <div class="admin-x-axis" id="admin-x-axis"></div>
       </div>
-    </section>
-
-    <section class="admin-members-section">
-      <div class="admin-section-header">
-        <p class="admin-section-title">최근 사전등록자</p>
-        <a class="admin-section-link" href="admin-registrants.html">전체보기</a>
-      </div>
-      <div class="admin-members-list" id="admin-members-list"></div>
     </section>
   </div>
 </div>

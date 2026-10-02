@@ -31,6 +31,29 @@
     `;
   }
 
+  // checked_in_at arrives as a UTC ISO string; staff at the venue need KST.
+  function formatKstDateTime(iso) {
+    if (!iso) return '';
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) return '';
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(date).reduce((acc, p) => ({ ...acc, [p.type]: p.value }), {});
+    const hour = parts.hour === '24' ? '00' : parts.hour;
+    return `${parts.year}.${parts.month}.${parts.day} ${hour}:${parts.minute}`;
+  }
+
+  // "소속 · 체크인 시각", skipping whichever part is missing.
+  function checkinSubText(body) {
+    return [escapeHtml(body.organization), formatKstDateTime(body.checked_in_at)].filter(Boolean).join(' · ');
+  }
+
   function escapeHtml(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, (ch) => ({
       '&': '&amp;',
@@ -95,19 +118,9 @@
       }
 
       if (responseBody.already) {
-        showResult(
-          'dup',
-          '이미 체크인됨',
-          escapeHtml(responseBody.name),
-          `${escapeHtml(responseBody.organization) || ''} · ${escapeHtml(responseBody.checked_in_at) || ''}`
-        );
+        showResult('dup', '이미 체크인됨', escapeHtml(responseBody.name), checkinSubText(responseBody));
       } else {
-        showResult(
-          'ok',
-          '체크인 성공',
-          escapeHtml(responseBody.name),
-          `${escapeHtml(responseBody.organization) || ''} · ${escapeHtml(responseBody.checked_in_at) || ''}`
-        );
+        showResult('ok', '체크인 성공', escapeHtml(responseBody.name), checkinSubText(responseBody));
       }
       // Camera keeps running so the next attendee's QR can be scanned right away.
     } catch (err) {

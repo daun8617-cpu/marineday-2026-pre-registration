@@ -1,0 +1,325 @@
+/* admin-registrants.html 전용 반응형 스타일.
+   admin-login.css / admin-dashboard.css / admin-registrants.css 는 다른 관리자 페이지도 함께 쓰는 공용 파일이라 그대로 두고,
+   body.admin-registrants 범위 안에서만 덮어쓴다. 관리자 페이지는 밝은 톤, 글꼴은 모두 Pretendard 다.
+   기본값은 모바일(393px 기준, 좌우 24px, 카드형)이고 아래 미디어 쿼리가 PC(1024px 이상, 콘텐츠 최대 1200px, 표 형태) 레이아웃이다.
+   등록자 항목 순서는 대시보드와 같다: 등록일시, 소속, 이름, 직급, 전화번호, 메일. */
+
+.admin-registrants {
+  /* admin-login.css 의 "PretendardVariable" 은 실제로 불러오는 글꼴 이름("Pretendard Variable")과 달라 적용되지 않는다 */
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.admin-registrants button,
+.admin-registrants input {
+  font-family: inherit;
+}
+
+/* ---------- 좌우 여백 24px ---------- */
+
+.admin-registrants .admin-registrants-page {
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+
+.admin-registrants .admin-registrants-header {
+  padding: 0 24px 8px;
+}
+
+/* 버튼 안의 화살표가 좌우 24px 여백선에 맞도록 */
+.admin-registrants .admin-back-btn {
+  margin-left: -6px;
+}
+
+.admin-registrants .admin-dashboard-error {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.admin-registrants .admin-search-bar,
+.admin-registrants .admin-filter-tabs,
+.admin-registrants .admin-checkin-filter-tabs,
+.admin-registrants .admin-list-summary {
+  margin: 0 24px;
+}
+
+.admin-registrants .admin-pagination-area {
+  padding: 0 24px;
+}
+
+/* 16px 미만이면 iOS 에서 입력 시 화면이 확대된다 */
+.admin-registrants .admin-search-bar input {
+  font-size: 16px;
+}
+
+.admin-registrants .admin-filter-tab,
+.admin-registrants .admin-download-btn {
+  white-space: nowrap;
+}
+
+/* ---------- 등록자 카드 (모바일) ---------- */
+
+.admin-registrants .admin-registrants-head {
+  display: none;
+}
+
+.admin-registrants .admin-registrant-card {
+  padding: 16px 24px;
+}
+
+/* 등록일시 | 소속 / 이름 | 직급 / 전화번호 / 메일 / 체크인 상태 */
+.admin-registrants .admin-registrant-link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px 12px;
+}
+
+.admin-registrants .admin-registrant-link p {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--admin-muted);
+}
+
+.admin-registrants .admin-registrant-date {
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-registrants .admin-registrant-org,
+.admin-registrants .admin-registrant-position {
+  text-align: right;
+}
+
+.admin-registrants .admin-registrant-link .admin-registrant-org {
+  font-weight: 600;
+  color: var(--admin-label);
+}
+
+.admin-registrants .admin-registrant-link .admin-registrant-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--admin-ink);
+}
+
+.admin-registrants .admin-registrant-phone,
+.admin-registrants .admin-registrant-email,
+.admin-registrants .admin-registrant-checkin-row {
+  grid-column: 1 / -1;
+}
+
+/* 사전등록 상태 · 체크인 상태 배지는 왼쪽, 체크인일시는 오른쪽 */
+.admin-registrants .admin-registrant-checkin-row {
+  margin-top: 4px;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.admin-registrants .admin-checkin-badge.reg {
+  background: var(--admin-blue-50);
+  color: #2563eb;
+}
+
+.admin-registrants .admin-checkin-time {
+  margin-left: auto;
+}
+
+/* ==========================================================
+   PC (1024px 이상): 옅은 회색 배경, 콘텐츠 최대 1200px.
+   위쪽에 검색·필터·요약을 두 줄로 놓고, 등록자는 표 형태로 보여준다.
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  html:has(.admin-registrants),
+  .admin-registrants {
+    background: #f1f5f9;
+  }
+
+  .admin-registrants .admin-registrants-page {
+    width: min(1200px, 100% - 80px);
+    max-width: none;
+    padding: 40px 0 80px;
+    gap: 28px;
+  }
+
+  .admin-registrants .admin-registrants-header {
+    padding: 0;
+  }
+
+  .admin-registrants .admin-back-btn {
+    width: 40px;
+    height: 40px;
+    margin-left: -10px;
+  }
+
+  .admin-registrants .admin-registrants-title {
+    font-size: 26px;
+    letter-spacing: -0.65px;
+  }
+
+  .admin-registrants .admin-dashboard-error {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* ---------- 검색 / 필터 / 요약 ---------- */
+
+  .admin-registrants .admin-registrants-body {
+    display: grid;
+    grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+    grid-template-areas:
+      "search dates"
+      "checkin summary"
+      "table table"
+      "more more";
+    align-items: center;
+    gap: 16px 24px;
+  }
+
+  .admin-registrants .admin-search-bar,
+  .admin-registrants .admin-filter-tabs,
+  .admin-registrants .admin-checkin-filter-tabs,
+  .admin-registrants .admin-list-summary {
+    margin: 0;
+  }
+
+  .admin-registrants .admin-search-bar {
+    grid-area: search;
+    background: #ffffff;
+  }
+
+  .admin-registrants .admin-search-bar input {
+    font-size: 15px;
+  }
+
+  .admin-registrants .admin-filter-tabs {
+    grid-area: dates;
+    justify-content: flex-end;
+  }
+
+  .admin-registrants .admin-checkin-filter-tabs {
+    grid-area: checkin;
+  }
+
+  .admin-registrants .admin-list-summary {
+    grid-area: summary;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  .admin-registrants .admin-list-count,
+  .admin-registrants .admin-download-btn {
+    font-size: 14px;
+  }
+
+  /* ---------- 표 ---------- */
+
+  .admin-registrants .admin-registrants-table {
+    grid-area: table;
+    margin-top: 8px;
+    border: 1px solid var(--admin-border);
+    border-radius: 20px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .admin-registrants .admin-registrant-card {
+    display: grid;
+    align-items: center;
+    column-gap: 14px;
+    padding: 14px 20px;
+    background: #ffffff;
+    font-size: 14px;
+    /* 1024~1279px: 두 줄 (윗줄: 소속·이름·직급 / 아랫줄: 전화번호·메일) */
+    grid-template-columns: 132px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.8fr) 76px 80px 126px;
+    grid-template-areas:
+      "date org   name  pos   reg checkin time"
+      "date phone email email reg checkin time";
+    row-gap: 6px;
+  }
+
+  .admin-registrants .admin-registrant-card:last-child {
+    border-bottom: 0;
+  }
+
+  .admin-registrants .admin-registrant-card:hover {
+    background: var(--admin-slate-50);
+  }
+
+  /* 링크의 자식들이 카드 격자에 직접 놓이게 한다 */
+  .admin-registrants .admin-registrant-link {
+    display: contents;
+  }
+
+  .admin-registrants .admin-registrant-link p {
+    text-align: left;
+    color: var(--admin-label);
+  }
+
+  .admin-registrants .admin-registrant-date { grid-area: date; }
+  .admin-registrants .admin-registrant-org { grid-area: org; }
+  .admin-registrants .admin-registrant-name { grid-area: name; }
+  .admin-registrants .admin-registrant-position { grid-area: pos; }
+  .admin-registrants .admin-registrant-phone { grid-area: phone; }
+  .admin-registrants .admin-registrant-email { grid-area: email; }
+
+  .admin-registrants .admin-registrant-link .admin-registrant-date,
+  .admin-registrants .admin-registrant-link .admin-registrant-phone,
+  .admin-registrants .admin-registrant-link .admin-registrant-email {
+    color: var(--admin-muted);
+  }
+
+  .admin-registrants .admin-registrant-link .admin-registrant-phone {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 상태 배지 2개와 체크인일시가 각각 한 칸씩 차지한다 */
+  .admin-registrants .admin-registrant-checkin-row {
+    display: contents;
+  }
+
+  .admin-registrants .admin-registrant-reg-status {
+    grid-area: reg;
+    justify-self: start;
+  }
+
+  .admin-registrants .admin-registrant-checkin-status {
+    grid-area: checkin;
+    justify-self: start;
+  }
+
+  .admin-registrants .admin-checkin-time {
+    grid-area: time;
+    margin-left: 0;
+    font-size: 13px;
+  }
+
+  .admin-registrants .admin-pagination-area {
+    grid-area: more;
+    padding: 0;
+  }
+
+  .admin-registrants .admin-more-btn {
+    width: auto;
+    min-width: 280px;
+    margin: 8px auto 0;
+    background: #ffffff;
+  }
+}
+
+/* 1280px 이상: 등록자 한 명이 한 줄 + 열 제목 표시 */
+@media (min-width: 1280px) {
+  .admin-registrants .admin-registrants-head,
+  .admin-registrants .admin-registrant-card {
+    grid-template-columns: 132px minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.9fr) 120px minmax(0, 1.8fr) 76px 80px 126px;
+    grid-template-areas: "date org name pos phone email reg checkin time";
+  }
+
+  .admin-registrants .admin-registrants-head {
+    display: grid;
+    column-gap: 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--admin-border);
+    background: var(--admin-slate-50);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--admin-muted);
+  }
+}

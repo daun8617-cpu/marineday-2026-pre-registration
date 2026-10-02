@@ -1,0 +1,92 @@
+/* admin-cancel-complete.html 전용 반응형 스타일.
+   공용 관리자 CSS(admin-login.css, admin-dashboard.css, admin-registrants.css, admin-cancel-complete.css)는 그대로 두고,
+   body.admin-cancel-complete 범위 안에서만 덮어쓴다. 관리자 페이지는 밝은 톤, 글꼴은 모두 Pretendard 다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상) 레이아웃이다. */
+
+.admin-cancel-complete {
+  /* admin-login.css 의 "PretendardVariable" 은 실제로 불러오는 글꼴 이름("Pretendard Variable")과 달라 적용되지 않는다 */
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.admin-cancel-complete .admin-cancel-complete-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.admin-cancel-complete .admin-registrants-header {
+  padding: 0 24px 8px;
+}
+
+/* 버튼 안의 화살표가 좌우 24px 여백선에 맞도록 */
+.admin-cancel-complete .admin-back-btn {
+  margin-left: -6px;
+}
+
+.admin-cancel-complete .admin-cancel-complete-center {
+  padding: 0 24px;
+}
+
+.admin-cancel-complete .admin-cancel-complete-title,
+.admin-cancel-complete .admin-cancel-complete-subtitle {
+  word-break: keep-all;
+}
+
+.admin-cancel-complete .admin-cancel-complete-bottom {
+  padding: 12px 24px calc(32px + env(safe-area-inset-bottom));
+}
+
+/* ==========================================================
+   PC (1024px 이상): 옅은 회색 배경 가운데에 520px 흰색 카드
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  html:has(.admin-cancel-complete) {
+    background: #f1f5f9;
+  }
+
+  .admin-cancel-complete {
+    display: flex;
+    min-height: 100vh;
+    padding: 40px;
+    background: #f1f5f9;
+  }
+
+  /* .admin-page 자체가 카드가 된다 */
+  .admin-cancel-complete .admin-cancel-complete-page {
+    width: min(520px, 100%);
+    max-width: none;
+    min-height: 0;
+    margin: auto;
+    padding: 32px 40px 40px;
+    border: 1px solid var(--admin-border);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  }
+
+  .admin-cancel-complete .admin-registrants-header {
+    padding: 0;
+  }
+
+  .admin-cancel-complete .admin-cancel-complete-center {
+    flex: none;
+    padding: 48px 0 40px;
+  }
+
+  .admin-cancel-complete .admin-cancel-complete-title {
+    font-size: 24px;
+  }
+
+  .admin-cancel-complete .admin-cancel-complete-subtitle {
+    font-size: 15px;
+  }
+
+  .admin-cancel-complete .admin-cancel-complete-bottom {
+    padding: 0;
+  }
+
+  .admin-cancel-complete .admin-btn-confirm {
+    height: 56px;
+    border-radius: 14px;
+  }
+}

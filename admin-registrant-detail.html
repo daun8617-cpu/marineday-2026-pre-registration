@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="assets/admin-dashboard.css" />
 <link rel="stylesheet" href="assets/admin-registrants.css" />
 <link rel="stylesheet" href="assets/admin-registrant-detail.css" />
+<link rel="stylesheet" href="assets/admin-registrant-detail-responsive.css" />
 </head>
-<body>
+<body class="admin-registrant-detail">
 <div class="admin-page admin-detail-page" id="admin-detail-page" hidden>
   <div class="admin-registrants-header">
     <a class="admin-back-btn" href="admin-registrants.html" aria-label="뒤로가기">
@@ -29,30 +30,33 @@
       <div class="admin-avatar" id="admin-avatar">-</div>
       <div class="admin-name-status-group">
         <p class="admin-profile-name" id="admin-profile-name">-</p>
-        <span class="admin-status-tag" id="admin-status-tag">등록완료</span>
+        <div class="admin-status-tags">
+          <span class="admin-status-tag" id="admin-status-tag">등록완료</span>
+          <span class="admin-status-tag admin-checkin-tag" id="admin-checkin-tag">미체크인</span>
+        </div>
       </div>
     </div>
 
     <div class="admin-info-card">
       <div class="admin-info-row">
-        <p class="admin-info-label">전화번호</p>
-        <p class="admin-info-value" id="admin-info-phone">-</p>
-      </div>
-      <div class="admin-info-row">
-        <p class="admin-info-label">이메일</p>
-        <p class="admin-info-value" id="admin-info-email">-</p>
+        <p class="admin-info-label">등록일시</p>
+        <p class="admin-info-value" id="admin-info-created">-</p>
       </div>
       <div class="admin-info-row">
         <p class="admin-info-label">소속</p>
         <p class="admin-info-value" id="admin-info-org">-</p>
       </div>
       <div class="admin-info-row">
-        <p class="admin-info-label">직책</p>
+        <p class="admin-info-label">직급</p>
         <p class="admin-info-value" id="admin-info-position">-</p>
       </div>
       <div class="admin-info-row">
-        <p class="admin-info-label">등록일시</p>
-        <p class="admin-info-value" id="admin-info-created">-</p>
+        <p class="admin-info-label">전화번호</p>
+        <p class="admin-info-value" id="admin-info-phone">-</p>
+      </div>
+      <div class="admin-info-row">
+        <p class="admin-info-label">메일</p>
+        <p class="admin-info-value" id="admin-info-email">-</p>
       </div>
       <div class="admin-info-row" id="admin-info-checkin-row" hidden>
         <p class="admin-info-label">체크인일시</p>

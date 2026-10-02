@@ -98,6 +98,7 @@
     const term = searchTerm.toLowerCase();
     return (
       (r.name || '').toLowerCase().includes(term) ||
+      (r.organization || '').toLowerCase().includes(term) ||
       (r.phone || '').toLowerCase().includes(term) ||
       (r.email || '').toLowerCase().includes(term)
     );
@@ -134,17 +135,6 @@
     });
   }
 
-  const STATUS_BADGE_CLASS = {
-    registered: 'muted',
-    checked_in: 'ok',
-    cancelled: 'cancelled',
-  };
-
-  function checkinBadge(r) {
-    const info = AdminRegistrationStatus.getStatusInfo(r);
-    return { cls: STATUS_BADGE_CLASS[info.key], label: info.label };
-  }
-
   function renderList() {
     renderCheckinFilterCounts();
 
@@ -158,32 +148,40 @@
     } else {
       listEl.innerHTML = visible
         .map((r) => {
-          const date = formatDotDate(kstCalendarDate(r.created_at));
-          const name = escapeHtml(r.name);
-          const phone = escapeHtml(r.phone);
+          // Same column order as the dashboard's recent list:
+          // 등록일시, 소속, 이름, 직급, 전화번호, 메일
+          const date = `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`;
           const org = escapeHtml(r.organization || '-');
+          const name = escapeHtml(r.name);
+          const position = escapeHtml(r.position || '-');
+          const phone = escapeHtml(r.phone);
           const email = escapeHtml(r.email);
-          const badge = checkinBadge(r);
-          const timeText = r.checked_in_at ? formatKstTime(r.checked_in_at) : '-';
-          const qrUrl = AdminQrLink.urlFor(r);
-          const qrActions = qrUrl
-            ? `
-              <div class="admin-qr-actions">
-                <a class="admin-qr-btn" href="${escapeHtml(qrUrl)}" target="_blank" rel="noopener noreferrer">QR 보기</a>
-                <button class="admin-qr-btn" type="button" data-qr-copy="${escapeHtml(qrUrl)}">QR 링크 복사</button>
-              </div>`
-            : '';
+          // 사전등록 상태 / 체크인 상태 / 체크인일시
+          const cancelled = r.status === 'cancelled';
+          const regBadge = cancelled
+            ? { cls: 'cancelled', label: '등록취소' }
+            : { cls: 'reg', label: '등록완료' };
+          const checkinBadge = r.checked_in
+            ? { cls: 'ok', label: '체크인완료' }
+            : { cls: 'muted', label: '미체크인' };
+          const checkinTime = r.checked_in_at
+            ? `${formatDotDate(kstCalendarDate(r.checked_in_at))} ${formatKstTime(r.checked_in_at)}`
+            : '-';
           return `
             <div class="admin-registrant-card">
               <a class="admin-registrant-link" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
-                <div class="admin-registrant-top"><p>${date}</p><p>${name}</p></div>
-                <div class="admin-registrant-middle"><p>${phone}</p><p>${org}</p></div>
+                <p class="admin-registrant-date">${date}</p>
+                <p class="admin-registrant-org">${org}</p>
+                <p class="admin-registrant-name">${name}</p>
+                <p class="admin-registrant-position">${position}</p>
+                <p class="admin-registrant-phone">${phone}</p>
                 <p class="admin-registrant-email">${email}</p>
                 <div class="admin-registrant-checkin-row">
-                  <span class="admin-checkin-badge ${badge.cls}">${badge.label}</span>
-                  <span class="admin-checkin-time">${timeText}</span>
+                  <span class="admin-checkin-badge admin-registrant-reg-status ${regBadge.cls}">${regBadge.label}</span>
+                  <span class="admin-checkin-badge admin-registrant-checkin-status ${checkinBadge.cls}">${checkinBadge.label}</span>
+                  <span class="admin-checkin-time">${checkinTime}</span>
                 </div>
-              </a>${qrActions}
+              </a>
             </div>
           `;
         })
@@ -221,12 +219,6 @@
     renderList();
   });
 
-  listEl.addEventListener('click', function (e) {
-    const btn = e.target.closest('[data-qr-copy]');
-    if (!btn) return;
-    AdminQrLink.copyFromButton(btn, btn.dataset.qrCopy);
-  });
-
   moreBtn.addEventListener('click', function () {
     visibleCount += PAGE_SIZE;
     renderList();
@@ -253,7 +245,8 @@
       r.email,
       r.organization || '',
       r.position || '',
-      AdminRegistrationStatus.getStatusInfo(r).label,
+      // Same two-value labels as the on-screen list.
+      r.status === 'cancelled' ? '등록취소' : '등록완료',
       r.checked_in ? '체크인완료' : '미체크인',
       r.checked_in_at ? `${formatDotDate(kstCalendarDate(r.checked_in_at))} ${formatKstTime(r.checked_in_at)}` : '',
       AdminQrLink.productionUrlFor(r),

@@ -1,0 +1,87 @@
+/* admin-login.html 전용 반응형 스타일.
+   admin-login.css 는 다른 관리자 페이지도 함께 쓰는 공용 파일이라 그대로 두고, body.admin-login 범위 안에서만 덮어쓴다.
+   관리자 페이지는 밝은 톤을 유지하고 글꼴은 모두 Pretendard 다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상) 레이아웃이다. */
+
+.admin-login {
+  /* admin-login.css 의 "PretendardVariable" 은 실제로 불러오는 글꼴 이름("Pretendard Variable")과 달라 적용되지 않는다 */
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.admin-login button,
+.admin-login input {
+  font-family: inherit;
+}
+
+.admin-login .admin-page {
+  max-width: 528px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 40px 24px calc(40px + env(safe-area-inset-bottom));
+}
+
+.admin-login .admin-logo-main {
+  font-size: clamp(40px, 12.2vw, 52px);
+  letter-spacing: -0.025em;
+}
+
+.admin-login .admin-logo-year {
+  font-size: clamp(35px, 10.6vw, 45px);
+  letter-spacing: -0.025em;
+}
+
+.admin-login .admin-title {
+  font-size: clamp(20px, 5.6vw, 24px);
+  word-break: keep-all;
+}
+
+.admin-login .admin-input-box {
+  height: 52px;
+}
+
+/* 16px 미만이면 iOS 에서 입력 시 화면이 확대된다 */
+.admin-login .admin-input {
+  background: transparent;
+  font-size: 16px;
+}
+
+.admin-login .admin-submit-btn {
+  height: 52px;
+}
+
+/* ==========================================================
+   PC (1024px 이상): 옅은 회색 배경 가운데에 500px 흰색 로그인 카드
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  html:has(.admin-login) {
+    background: #f1f5f9;
+  }
+
+  .admin-login {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0, 172, 194, 0.1), rgba(0, 172, 194, 0) 70%),
+      #f1f5f9;
+    background-attachment: fixed;
+  }
+
+  .admin-login .admin-page {
+    max-width: none;
+    padding: 40px;
+  }
+
+  .admin-login .admin-login-content {
+    flex: none;
+    width: min(500px, 100%);
+    margin: auto;
+    padding: 56px 52px 48px;
+    border-radius: 24px;
+    border: 1px solid var(--admin-border);
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  }
+
+  .admin-login .admin-submit-btn {
+    height: 56px;
+  }
+}

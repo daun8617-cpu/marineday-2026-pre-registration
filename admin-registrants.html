@@ -11,8 +11,9 @@
 <link rel="stylesheet" href="assets/admin-login.css" />
 <link rel="stylesheet" href="assets/admin-dashboard.css" />
 <link rel="stylesheet" href="assets/admin-registrants.css" />
+<link rel="stylesheet" href="assets/admin-registrants-responsive.css" />
 </head>
-<body>
+<body class="admin-registrants">
 <div class="admin-page admin-registrants-page" id="admin-registrants-page" hidden>
   <div class="admin-registrants-header">
     <a class="admin-back-btn" href="admin-dashboard.html" aria-label="뒤로가기">
@@ -26,7 +27,7 @@
   <div class="admin-registrants-body" id="admin-registrants-body" hidden>
     <div class="admin-search-bar">
       <img src="assets/admin-search.svg" alt="" />
-      <input type="text" id="admin-search-input" placeholder="이름, 전화번호, 이메일로 검색" />
+      <input type="text" id="admin-search-input" placeholder="이름, 소속, 전화번호, 이메일로 검색" />
     </div>
 
     <div class="admin-filter-tabs" id="admin-filter-tabs">
@@ -51,7 +52,20 @@
       </button>
     </div>
 
-    <div class="admin-registrants-list" id="admin-registrants-list"></div>
+    <div class="admin-registrants-table">
+      <div class="admin-registrants-head" aria-hidden="true">
+        <span>등록일시</span>
+        <span>소속</span>
+        <span>이름</span>
+        <span>직급</span>
+        <span>전화번호</span>
+        <span>메일</span>
+        <span>사전등록 상태</span>
+        <span>체크인 상태</span>
+        <span>체크인일시</span>
+      </div>
+      <div class="admin-registrants-list" id="admin-registrants-list"></div>
+    </div>
 
     <div class="admin-pagination-area">
       <button class="admin-more-btn" id="admin-more-btn" type="button">

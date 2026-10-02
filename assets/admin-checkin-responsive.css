@@ -1,0 +1,142 @@
+/* admin-checkin.html 전용 반응형 스타일.
+   공용 admin-login.css 와 admin-checkin.css 는 그대로 두고, body.admin-checkin 범위 안에서만 덮어쓴다.
+   관리자 페이지는 밝은 톤, 글꼴은 모두 Pretendard 다.
+   카메라 영역(#admin-checkin-reader)은 QR 스캐너 라이브러리가 크기를 계산하므로 폭 외에는 건드리지 않는다.
+   기본값은 모바일(393px 기준, 좌우 24px)이고 파일 끝의 미디어 쿼리가 PC(1024px 이상) 레이아웃이다. */
+
+.admin-checkin {
+  /* admin-login.css 의 "PretendardVariable" 은 실제로 불러오는 글꼴 이름("Pretendard Variable")과 달라 적용되지 않는다 */
+  font-family: "Pretendard Variable", "PretendardVariable", "Pretendard", -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+}
+
+.admin-checkin button,
+.admin-checkin input {
+  font-family: inherit;
+}
+
+.admin-checkin .admin-checkin-page {
+  padding-bottom: calc(40px + env(safe-area-inset-bottom));
+}
+
+.admin-checkin .admin-checkin-header {
+  padding: 0 24px 8px;
+}
+
+/* 이 페이지는 admin-registrants.css 를 불러오지 않아 뒤로 가기 버튼 크기가 정해져 있지 않다 */
+.admin-checkin .admin-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: -6px;
+  flex-shrink: 0;
+}
+
+.admin-checkin .admin-back-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.admin-checkin .admin-dashboard-error {
+  margin: 0 24px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: var(--admin-error);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.admin-checkin .admin-checkin-body {
+  padding: 0 24px;
+}
+
+.admin-checkin .admin-checkin-start-btn {
+  height: 52px;
+  font-size: 16px;
+}
+
+.admin-checkin .admin-checkin-manual input,
+.admin-checkin .admin-checkin-manual button {
+  height: 48px;
+}
+
+/* 16px 미만이면 iOS 에서 입력 시 화면이 확대된다 */
+.admin-checkin .admin-checkin-manual input {
+  font-size: 16px;
+}
+
+.admin-checkin .admin-checkin-manual button {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* 현장에서 멀리서도 읽히도록 결과를 크게 */
+.admin-checkin .admin-checkin-result {
+  gap: 6px;
+  padding: 22px 24px;
+}
+
+.admin-checkin .admin-checkin-result .status-label {
+  font-size: 15px;
+}
+
+.admin-checkin .admin-checkin-result .status-name {
+  font-size: 26px;
+  overflow-wrap: anywhere;
+}
+
+.admin-checkin .admin-checkin-result .status-sub {
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* ==========================================================
+   PC (1024px 이상): 옅은 회색 배경 가운데에 560px 흰색 카드
+   ========================================================== */
+
+@media (min-width: 1024px) {
+  html:has(.admin-checkin),
+  .admin-checkin {
+    background: #f1f5f9;
+  }
+
+  .admin-checkin .admin-checkin-page {
+    width: min(560px, 100% - 80px);
+    max-width: none;
+    min-height: 0;
+    margin: 40px auto;
+    padding: 32px 40px 40px;
+    border: 1px solid var(--admin-border);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  }
+
+  .admin-checkin .admin-checkin-header {
+    padding: 0 0 8px;
+  }
+
+  .admin-checkin .admin-checkin-title {
+    font-size: 24px;
+    letter-spacing: -0.6px;
+  }
+
+  .admin-checkin .admin-dashboard-error {
+    margin: 0;
+  }
+
+  .admin-checkin .admin-checkin-body {
+    padding: 0;
+  }
+
+  .admin-checkin .admin-checkin-result .status-name {
+    font-size: 30px;
+  }
+}

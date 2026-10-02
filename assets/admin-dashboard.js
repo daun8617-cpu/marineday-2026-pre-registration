@@ -11,6 +11,7 @@
   const kpiCheckedInEl = document.getElementById('admin-kpi-checked-in');
   const kpiNotCheckedInEl = document.getElementById('admin-kpi-not-checked-in');
   const kpiCheckinRateEl = document.getElementById('admin-kpi-checkin-rate');
+  const kpiCheckinCountEl = document.getElementById('admin-kpi-checkin-count');
 
   const tabDailyBtn = document.getElementById('admin-tab-daily');
   const tabWeeklyBtn = document.getElementById('admin-tab-weekly');
@@ -58,6 +59,15 @@
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
     return `${y}.${m}.${d}`;
+  }
+
+  function formatKstTime(dateInput) {
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Seoul',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).format(new Date(dateInput));
   }
 
   function formatShortDate(date) {
@@ -110,6 +120,7 @@
     kpiCheckedInEl.textContent = checkedInCount.toLocaleString('ko-KR');
     kpiNotCheckedInEl.textContent = notCheckedInCount.toLocaleString('ko-KR');
     kpiCheckinRateEl.textContent = `${checkinRate}%`;
+    kpiCheckinCountEl.textContent = `${checkedInCount.toLocaleString('ko-KR')} / ${active.length.toLocaleString('ko-KR')}명`;
   }
 
   function renderChart() {
@@ -183,15 +194,20 @@
 
     membersListEl.innerHTML = list
       .map((r) => {
-        const date = formatDotDate(kstCalendarDate(r.created_at));
-        const name = escapeHtml(r.name);
-        const phone = escapeHtml(r.phone);
+        // Column order: 등록일시, 소속, 이름, 직급, 전화번호, 메일
+        const date = `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`;
         const org = escapeHtml(r.organization || '-');
+        const name = escapeHtml(r.name);
+        const position = escapeHtml(r.position || '-');
+        const phone = escapeHtml(r.phone);
         const email = escapeHtml(r.email);
         return `
           <a class="admin-member-card" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
-            <div class="admin-member-top"><p>${date}</p><p>${name}</p></div>
-            <div class="admin-member-middle"><p>${phone}</p><p>${org}</p></div>
+            <p class="admin-member-date">${date}</p>
+            <p class="admin-member-org">${org}</p>
+            <p class="admin-member-name">${name}</p>
+            <p class="admin-member-position">${position}</p>
+            <p class="admin-member-phone">${phone}</p>
             <p class="admin-member-email">${email}</p>
           </a>
         `;

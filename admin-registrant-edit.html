@@ -13,8 +13,9 @@
 <link rel="stylesheet" href="assets/admin-registrants.css" />
 <link rel="stylesheet" href="assets/admin-registrant-detail.css" />
 <link rel="stylesheet" href="assets/admin-registrant-edit.css" />
+<link rel="stylesheet" href="assets/admin-registrant-edit-responsive.css" />
 </head>
-<body>
+<body class="admin-registrant-edit">
 <div class="admin-page admin-edit-page" id="admin-edit-page" hidden>
   <div class="admin-registrants-header">
     <a class="admin-back-btn" id="admin-back-btn" href="admin-registrants.html" aria-label="뒤로가기">
@@ -35,20 +36,6 @@
       </div>
 
       <div class="admin-field">
-        <label class="admin-field-label" for="f-phone">연락처</label>
-        <div class="admin-input-box">
-          <input class="admin-input" id="f-phone" name="phone" type="tel" pattern="[0-9\-]{9,13}" required />
-        </div>
-      </div>
-
-      <div class="admin-field">
-        <label class="admin-field-label" for="f-email">이메일</label>
-        <div class="admin-input-box">
-          <input class="admin-input" id="f-email" name="email" type="email" required />
-        </div>
-      </div>
-
-      <div class="admin-field">
         <label class="admin-field-label" for="f-org">소속</label>
         <div class="admin-input-box">
           <input class="admin-input" id="f-org" name="org" type="text" required />
@@ -56,9 +43,23 @@
       </div>
 
       <div class="admin-field">
-        <label class="admin-field-label" for="f-position">직책</label>
+        <label class="admin-field-label" for="f-position">직급</label>
         <div class="admin-input-box">
           <input class="admin-input" id="f-position" name="position" type="text" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-phone">전화번호</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-phone" name="phone" type="tel" pattern="[0-9\-]{9,13}" required />
+        </div>
+      </div>
+
+      <div class="admin-field">
+        <label class="admin-field-label" for="f-email">메일</label>
+        <div class="admin-input-box">
+          <input class="admin-input" id="f-email" name="email" type="email" required />
         </div>
       </div>
 
