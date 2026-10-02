@@ -17,6 +17,11 @@
   const checkinRowEl = document.getElementById('admin-info-checkin-row');
   const checkinEl = document.getElementById('admin-info-checkin');
 
+  const qrCardEl = document.getElementById('admin-qr-card');
+  const qrUrlEl = document.getElementById('admin-qr-url');
+  const qrViewEl = document.getElementById('admin-qr-view');
+  const qrCopyBtn = document.getElementById('admin-qr-copy');
+
   const deleteBtn = document.getElementById('admin-btn-delete');
   const deleteBtnLabel = document.getElementById('admin-btn-delete-label');
   const editBtn = document.getElementById('admin-btn-edit');
@@ -88,7 +93,19 @@
     statusTagEl.classList.toggle('cancelled', cancelled);
     deleteBtn.disabled = cancelled;
     deleteBtnLabel.textContent = cancelled ? '취소됨' : '등록취소';
+
+    const qrUrl = AdminQrLink.urlFor(record);
+    qrCardEl.hidden = !qrUrl;
+    if (qrUrl) {
+      qrUrlEl.textContent = qrUrl;
+      qrViewEl.href = qrUrl;
+    }
   }
+
+  qrCopyBtn.addEventListener('click', function () {
+    const qrUrl = record && AdminQrLink.urlFor(record);
+    if (qrUrl) AdminQrLink.copyFromButton(qrCopyBtn, qrUrl);
+  });
 
   function resetDeleteButton() {
     confirmingDelete = false;

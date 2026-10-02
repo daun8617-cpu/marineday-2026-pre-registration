@@ -33,7 +33,11 @@ module.exports = async function handler(req, res) {
   if (!numericId || !Number.isInteger(numericId)) {
     return res.status(400).json({ error: '잘못된 요청입니다.' });
   }
-  if (!name || !phone || !email) {
+  // Same rule as api/register.js: every field is required and whitespace-only
+  // values count as empty.
+  const isBlank = (value) => typeof value !== 'string' || value.trim() === '';
+
+  if (isBlank(name) || isBlank(phone) || isBlank(email) || isBlank(org) || isBlank(position)) {
     return res.status(400).json({ error: '필수 항목이 누락되었습니다.' });
   }
   if (!PHONE_PATTERN.test(phone)) {
@@ -49,8 +53,8 @@ module.exports = async function handler(req, res) {
       name: String(name).trim(),
       phone: String(phone).trim(),
       email: String(email).trim(),
-      organization: org ? String(org).trim() : null,
-      position: position ? String(position).trim() : null,
+      organization: String(org).trim(),
+      position: String(position).trim(),
     })
     .eq('id', numericId)
     .select('id')

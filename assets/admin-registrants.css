@@ -166,6 +166,14 @@
   color: inherit;
 }
 
+.admin-registrant-link {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
 .admin-registrant-top {
   display: flex;
   align-items: center;
@@ -269,4 +277,29 @@
 .admin-more-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ---------- QR LINK ACTIONS (list + detail) ---------- */
+
+.admin-qr-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-qr-btn {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--admin-link-teal);
+  text-decoration: none;
+  cursor: pointer;
 }

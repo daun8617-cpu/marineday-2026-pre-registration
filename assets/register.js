@@ -6,8 +6,22 @@
     form.consent.checked = true;
   }
 
+  // Every text field is required. The native `required` check lets a value of
+  // only spaces through, so flag those as missing too (the server rejects them).
+  const requiredFields = [form.name, form.phone, form.email, form.org, form.position];
+
+  requiredFields.forEach(function (field) {
+    field.addEventListener('input', function () {
+      field.setCustomValidity('');
+    });
+  });
+
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
+
+    requiredFields.forEach(function (field) {
+      field.setCustomValidity(field.value.trim() === '' ? '필수 입력 항목입니다.' : '');
+    });
 
     if (!form.reportValidity()) {
       return;

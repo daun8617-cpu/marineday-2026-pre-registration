@@ -176,3 +176,30 @@
   width: 18px;
   height: 18px;
 }
+
+/* ---------- QR LINK ---------- */
+
+.admin-qr-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.admin-qr-card-title {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--admin-muted);
+}
+
+.admin-qr-card-url {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--admin-ink);
+  word-break: break-all;
+}

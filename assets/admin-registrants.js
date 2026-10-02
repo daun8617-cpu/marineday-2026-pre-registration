@@ -165,16 +165,26 @@
           const email = escapeHtml(r.email);
           const badge = checkinBadge(r);
           const timeText = r.checked_in_at ? formatKstTime(r.checked_in_at) : '-';
+          const qrUrl = AdminQrLink.urlFor(r);
+          const qrActions = qrUrl
+            ? `
+              <div class="admin-qr-actions">
+                <a class="admin-qr-btn" href="${escapeHtml(qrUrl)}" target="_blank" rel="noopener noreferrer">QR 보기</a>
+                <button class="admin-qr-btn" type="button" data-qr-copy="${escapeHtml(qrUrl)}">QR 링크 복사</button>
+              </div>`
+            : '';
           return `
-            <a class="admin-registrant-card" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
-              <div class="admin-registrant-top"><p>${date}</p><p>${name}</p></div>
-              <div class="admin-registrant-middle"><p>${phone}</p><p>${org}</p></div>
-              <p class="admin-registrant-email">${email}</p>
-              <div class="admin-registrant-checkin-row">
-                <span class="admin-checkin-badge ${badge.cls}">${badge.label}</span>
-                <span class="admin-checkin-time">${timeText}</span>
-              </div>
-            </a>
+            <div class="admin-registrant-card">
+              <a class="admin-registrant-link" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
+                <div class="admin-registrant-top"><p>${date}</p><p>${name}</p></div>
+                <div class="admin-registrant-middle"><p>${phone}</p><p>${org}</p></div>
+                <p class="admin-registrant-email">${email}</p>
+                <div class="admin-registrant-checkin-row">
+                  <span class="admin-checkin-badge ${badge.cls}">${badge.label}</span>
+                  <span class="admin-checkin-time">${timeText}</span>
+                </div>
+              </a>${qrActions}
+            </div>
           `;
         })
         .join('');
@@ -211,6 +221,12 @@
     renderList();
   });
 
+  listEl.addEventListener('click', function (e) {
+    const btn = e.target.closest('[data-qr-copy]');
+    if (!btn) return;
+    AdminQrLink.copyFromButton(btn, btn.dataset.qrCopy);
+  });
+
   moreBtn.addEventListener('click', function () {
     visibleCount += PAGE_SIZE;
     renderList();
@@ -228,7 +244,7 @@
     const filtered = filteredRegistrations();
     const header = [
       '등록일시', '이름', '전화번호', '이메일', '소속', '직급',
-      '사전등록 상태', '체크인 상태', '체크인일시',
+      '사전등록 상태', '체크인 상태', '체크인일시', 'QR 링크',
     ];
     const rows = filtered.map((r) => [
       `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`,
@@ -240,6 +256,7 @@
       AdminRegistrationStatus.getStatusInfo(r).label,
       r.checked_in ? '체크인완료' : '미체크인',
       r.checked_in_at ? `${formatDotDate(kstCalendarDate(r.checked_in_at))} ${formatKstTime(r.checked_in_at)}` : '',
+      AdminQrLink.productionUrlFor(r),
     ]);
     const csv = [header, ...rows].map((row) => row.map(toCsvValue).join(',')).join('\r\n');
     const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });

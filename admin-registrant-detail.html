@@ -60,6 +60,15 @@
       </div>
     </div>
 
+    <div class="admin-qr-card" id="admin-qr-card" hidden>
+      <p class="admin-qr-card-title">참가자 QR 링크</p>
+      <p class="admin-qr-card-url" id="admin-qr-url">-</p>
+      <div class="admin-qr-actions">
+        <a class="admin-qr-btn" id="admin-qr-view" href="#" target="_blank" rel="noopener noreferrer">QR 보기</a>
+        <button class="admin-qr-btn" id="admin-qr-copy" type="button">QR 링크 복사</button>
+      </div>
+    </div>
+
     <p class="admin-action-message" id="admin-action-message" hidden></p>
 
     <div class="admin-detail-bottom-bar">
@@ -77,6 +86,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="assets/admin-supabase.js"></script>
 <script src="assets/admin-status.js"></script>
+<script src="assets/admin-qr-link.js"></script>
 <script src="assets/admin-registrant-detail.js"></script>
 </body>
 </html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>입장 QR | MARINE DAY 2026</title>
+<meta name="description" content="마린데이 2026 입장용 QR 코드" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="referrer" content="no-referrer" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
+<link rel="stylesheet" href="assets/style.css" />
+<link rel="stylesheet" href="assets/qr-card.css" />
+<link rel="stylesheet" href="assets/qr-page.css" />
+</head>
+<body class="qr-page">
+<div class="page">
+
+  <header class="qr-page-head">
+    <span class="qr-page-badge">MARINE DAY 2026</span>
+    <h1 class="qr-page-title">입장 QR 코드</h1>
+  </header>
+
+  <p class="qr-page-status" id="qr-loading">QR 코드를 불러오는 중입니다…</p>
+
+  <section class="qr-page-section" id="qr-ready" hidden>
+    <p class="qr-page-name"><span id="qr-name">-</span> 님</p>
+    <div class="qr-card">
+      <p class="qr-heading">체크인용 QR 코드</p>
+      <div class="qr-box"><canvas id="qr-canvas"></canvas></div>
+      <p class="qr-caption">행사 당일 입장 시 이 QR 코드를 제시해 주세요.</p>
+    </div>
+    <ul class="qr-page-guide">
+      <li>입구에서 이 화면을 보여 주시면 바로 체크인됩니다.</li>
+      <li>화면 밝기를 높이면 더 잘 인식됩니다.</li>
+      <li>본인 전용 QR입니다. 다른 사람에게 공유하지 마세요.</li>
+    </ul>
+  </section>
+
+  <section class="qr-page-section" id="qr-cancelled" hidden>
+    <div class="qr-page-notice">
+      <p class="qr-page-notice-title">취소된 사전등록입니다.</p>
+      <p class="qr-page-notice-text"><span id="qr-cancelled-name">-</span> 님의 사전등록은 취소되어 입장 QR을 사용할 수 없습니다. 참석을 원하시면 사전등록을 다시 신청해 주세요.</p>
+    </div>
+    <a class="qr-page-btn" href="register.html">사전등록 다시 하기</a>
+  </section>
+
+  <section class="qr-page-section" id="qr-error" hidden>
+    <div class="qr-page-notice">
+      <p class="qr-page-notice-title">QR 코드를 불러올 수 없습니다.</p>
+      <p class="qr-page-notice-text" id="qr-error-text">링크가 올바른지 확인해 주세요. 사전등록 조회에서도 QR 코드를 다시 확인할 수 있습니다.</p>
+    </div>
+    <a class="qr-page-btn" href="lookup.html">사전등록 조회하기</a>
+  </section>
+
+  <div class="qr-page-event">
+    <p class="qr-page-event-row"><span>일시</span><span>2026년 11월 18일 수요일</span></p>
+    <p class="qr-page-event-row"><span>장소</span><span>부산 파라다이스 호텔 2F 카프리룸</span></p>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+<script src="assets/qr-page.js"></script>
+</body>
+</html>

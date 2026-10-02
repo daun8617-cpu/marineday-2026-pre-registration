@@ -23,10 +23,24 @@
     return json.registrations;
   }
 
+  // Same rule as the registration form: every field is required, and a value
+  // of only spaces counts as empty (the server rejects it too).
+  const requiredFields = [form.name, form.phone, form.email, form.org, form.position];
+
+  requiredFields.forEach(function (field) {
+    field.addEventListener('input', function () {
+      field.setCustomValidity('');
+    });
+  });
+
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     formErrorEl.hidden = true;
+
+    requiredFields.forEach(function (field) {
+      field.setCustomValidity(field.value.trim() === '' ? '필수 입력 항목입니다.' : '');
+    });
 
     if (!form.reportValidity()) {
       return;

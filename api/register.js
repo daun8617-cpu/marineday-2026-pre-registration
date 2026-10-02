@@ -24,7 +24,13 @@ module.exports = async function handler(req, res) {
 
   const { name, phone, email, org, position, consent } = req.body || {};
 
-  if (!name || !phone || !email || !consent) {
+  // Every field on the form is required; whitespace-only values count as empty.
+  const isBlank = (value) => typeof value !== 'string' || value.trim() === '';
+
+  if (
+    isBlank(name) || isBlank(phone) || isBlank(email) ||
+    isBlank(org) || isBlank(position) || consent !== true
+  ) {
     return res.status(400).json({ error: '필수 항목이 누락되었습니다.' });
   }
   if (!PHONE_PATTERN.test(phone)) {
@@ -38,8 +44,8 @@ module.exports = async function handler(req, res) {
     name: String(name).trim(),
     phone: String(phone).trim(),
     email: String(email).trim(),
-    organization: org ? String(org).trim() : '',
-    position: position ? String(position).trim() : null,
+    organization: String(org).trim(),
+    position: String(position).trim(),
   };
 
   const normalizedInputPhone = normalizePhone(baseRecord.phone);
