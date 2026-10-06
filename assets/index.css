@@ -229,7 +229,8 @@ html:has(.home) {
 }
 
 .home-years {
-  margin-top: -16px;
+  position: relative;
+  margin-top: -2px;
   width: min(1147px, 100%);
   display: flex;
   align-items: flex-start;
@@ -257,8 +258,27 @@ html:has(.home) {
   margin-top: 38px;
 }
 
+.home-years-ai {
+  position: absolute;
+  left: 50%;
+  top: 39.5px;
+  transform: translate(-50%, -58%);
+  padding: 0.12em 0.5em;
+  font-weight: 500;
+  font-size: 1.1em;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: #d9f7ff;
+  background: radial-gradient(ellipse closest-side, #050b1c 62%, rgba(5, 11, 28, 0) 100%);
+  text-shadow:
+    0 0 0.1em rgba(255, 255, 255, 0.55),
+    0 0 0.32em rgba(84, 216, 255, 0.95),
+    0 0 0.75em rgba(84, 216, 255, 0.6);
+  pointer-events: none;
+}
+
 .home-theme-sub {
-  margin: 11px 0 0;
+  margin: 24px 0 0;
   font-weight: 600;
   font-size: 40px;
   line-height: 1.3;
@@ -652,6 +672,50 @@ a.home-row:hover {
   margin-top: 30px;
 }
 
+.home-speaker-photo--empty {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid var(--home-line);
+  background: rgba(20, 45, 79, 0.5);
+  color: rgba(207, 222, 255, 0.35);
+}
+
+.home-speaker-photo--empty svg {
+  width: 82%;
+  height: 82%;
+}
+
+.home-session-subtitle {
+  margin: 10px 0 0;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--home-sky);
+}
+
+.home-session-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-session-keywords li {
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(207, 222, 255, 0.25);
+  background: rgba(20, 45, 79, 0.5);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--home-text);
+  white-space: nowrap;
+}
+
 /* ---------- DIRECTIONS ---------- */
 
 .home-directions {
@@ -855,7 +919,7 @@ a.home-row:hover {
   }
 
   .home-years {
-    margin-top: calc(var(--u) * 8 / 393);
+    margin-top: calc(var(--u) * 14 / 393);
     gap: 12px;
     font-size: calc(var(--u) * 20 / 393);
     letter-spacing: -0.025em;
@@ -867,8 +931,12 @@ a.home-row:hover {
     margin-top: 0.6em;
   }
 
+  .home-years-ai {
+    top: calc(0.6em / 1.1 + 1px);
+  }
+
   .home-theme-sub {
-    margin: calc(var(--u) * 14 / 393) auto 0;
+    margin: calc(var(--u) * 20 / 393) auto 0;
     max-width: calc(var(--u) * 300 / 393);
     font-size: calc(var(--u) * 15 / 393);
     line-height: 1.45;
@@ -1099,6 +1167,22 @@ a.home-row:hover {
     margin-top: 16px;
   }
 
+  .home-session-subtitle {
+    margin-top: 6px;
+    font-size: 16px;
+    word-break: keep-all;
+  }
+
+  .home-session-keywords {
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .home-session-keywords li {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
   /* ---------- DIRECTIONS ---------- */
 
   .home-directions {
@@ -1192,6 +1276,6 @@ a.home-row:hover {
 /* 1024~1199px: 콘텐츠 폭이 좁아 연도(2016 / 2026)가 테마 문구와 겹치므로 연도 줄을 문구 아래로 내린다 */
 @media (min-width: 1024px) and (max-width: 1199px) {
   .home-years {
-    margin-top: 8px;
+    margin-top: 20px;
   }
 }
