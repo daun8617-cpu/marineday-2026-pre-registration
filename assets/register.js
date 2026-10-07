@@ -4,7 +4,7 @@
 
   // Every text field is required. The native `required` check lets a value of
   // only spaces through, so flag those as missing too (the server rejects them).
-  const requiredFields = [form.name, form.phone, form.email, form.org, form.position];
+  const requiredFields = [form.name, form.phone, form.email, form.org, form.department, form.position];
 
   // The terms page is a separate document, so going there and back reloads this
   // form. Keep what was typed in sessionStorage so it survives that round trip
@@ -77,6 +77,7 @@
       phone: form.phone.value.trim(),
       email: form.email.value.trim(),
       org: form.org.value.trim(),
+      department: form.department.value.trim(),
       position: form.position.value.trim(),
       consent: form.consent.checked,
     };

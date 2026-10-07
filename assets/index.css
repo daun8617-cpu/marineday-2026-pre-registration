@@ -653,7 +653,7 @@ a.home-row:hover {
 .home-session-title {
   margin: 0;
   font-weight: 700;
-  font-size: clamp(30px, 2.8vw, 36px);
+  font-size: clamp(28px, calc(2.8vw - 2px), 34px);
   color: var(--white);
 }
 
@@ -692,7 +692,7 @@ a.home-row:hover {
 .home-session-subtitle {
   margin: 10px 0 0;
   font-weight: 600;
-  font-size: 22px;
+  font-size: clamp(28px, calc(2.8vw - 2px), 34px);
   color: var(--home-sky);
 }
 
@@ -1153,7 +1153,7 @@ a.home-row:hover {
   }
 
   .home-session-title {
-    font-size: 22px;
+    font-size: 20px;
     word-break: keep-all;
   }
 
@@ -1169,7 +1169,7 @@ a.home-row:hover {
 
   .home-session-subtitle {
     margin-top: 6px;
-    font-size: 16px;
+    font-size: 20px;
     word-break: keep-all;
   }
 

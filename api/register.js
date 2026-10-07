@@ -22,14 +22,14 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, phone, email, org, position, consent } = req.body || {};
+  const { name, phone, email, org, department, position, consent } = req.body || {};
 
   // Every field on the form is required; whitespace-only values count as empty.
   const isBlank = (value) => typeof value !== 'string' || value.trim() === '';
 
   if (
     isBlank(name) || isBlank(phone) || isBlank(email) ||
-    isBlank(org) || isBlank(position) || consent !== true
+    isBlank(org) || isBlank(department) || isBlank(position) || consent !== true
   ) {
     return res.status(400).json({ error: '필수 항목이 누락되었습니다.' });
   }
@@ -45,6 +45,7 @@ module.exports = async function handler(req, res) {
     phone: String(phone).trim(),
     email: String(email).trim(),
     organization: String(org).trim(),
+    department: String(department).trim(),
     position: String(position).trim(),
   };
 
