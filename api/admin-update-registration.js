@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
     return res.status(401).json({ error: '인증이 만료되었습니다. 다시 로그인해 주세요.' });
   }
 
-  const { id, name, phone, email, org, position } = req.body || {};
+  const { id, name, phone, email, org, department, position } = req.body || {};
   const numericId = Number(id);
 
   if (!numericId || !Number.isInteger(numericId)) {
@@ -54,6 +54,8 @@ module.exports = async function handler(req, res) {
       phone: String(phone).trim(),
       email: String(email).trim(),
       organization: String(org).trim(),
+      // Optional here: registrations made before the field existed have none.
+      department: isBlank(department) ? null : department.trim(),
       position: String(position).trim(),
     })
     .eq('id', numericId)

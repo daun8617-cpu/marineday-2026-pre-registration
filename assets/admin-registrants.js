@@ -149,9 +149,10 @@
       listEl.innerHTML = visible
         .map((r) => {
           // Same column order as the dashboard's recent list:
-          // 등록일시, 소속, 이름, 직급, 전화번호, 메일
+          // 등록일시, 소속, 부서, 이름, 직급, 전화번호, 메일
           const date = `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`;
           const org = escapeHtml(r.organization || '-');
+          const department = escapeHtml(r.department || '-');
           const name = escapeHtml(r.name);
           const position = escapeHtml(r.position || '-');
           const phone = escapeHtml(r.phone);
@@ -172,6 +173,7 @@
               <a class="admin-registrant-link" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
                 <p class="admin-registrant-date">${date}</p>
                 <p class="admin-registrant-org">${org}</p>
+                <p class="admin-registrant-department">${department}</p>
                 <p class="admin-registrant-name">${name}</p>
                 <p class="admin-registrant-position">${position}</p>
                 <p class="admin-registrant-phone">${phone}</p>
@@ -235,7 +237,7 @@
   downloadBtn.addEventListener('click', function () {
     const filtered = filteredRegistrations();
     const header = [
-      '등록일시', '이름', '전화번호', '이메일', '소속', '직급',
+      '등록일시', '이름', '전화번호', '이메일', '소속', '부서', '직급',
       '사전등록 상태', '체크인 상태', '체크인일시', 'QR 링크',
     ];
     const rows = filtered.map((r) => [
@@ -244,6 +246,7 @@
       r.phone,
       r.email,
       r.organization || '',
+      r.department || '',
       r.position || '',
       // Same two-value labels as the on-screen list.
       r.status === 'cancelled' ? '등록취소' : '등록완료',

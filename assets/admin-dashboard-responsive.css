@@ -55,8 +55,8 @@
   margin-top: auto;
 }
 
-/* 최근 사전등록자: 등록일시, 소속, 이름, 직급, 전화번호, 메일 순.
-   모바일에서는 2칸 격자로 접는다 (등록일시 | 소속 / 이름 | 직급 / 전화번호 / 메일). */
+/* 최근 사전등록자: 등록일시, 소속, 부서, 이름, 직급, 전화번호, 메일 순.
+   모바일에서는 2칸 격자로 접는다 (등록일시 | 소속 / 부서 / 이름 | 직급 / 전화번호 / 메일). */
 .admin-dashboard .admin-member-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -75,6 +75,7 @@
 }
 
 .admin-dashboard .admin-member-org,
+.admin-dashboard .admin-member-department,
 .admin-dashboard .admin-member-position {
   text-align: right;
 }
@@ -90,6 +91,7 @@
   color: var(--admin-ink);
 }
 
+.admin-dashboard .admin-member-department,
 .admin-dashboard .admin-member-phone,
 .admin-dashboard .admin-member-email {
   grid-column: 1 / -1;
@@ -286,9 +288,9 @@
     border-radius: 20px;
   }
 
-  /* 등록자 한 명을 한 줄로: 등록일시 | 소속 | 이름 | 직급 | 전화번호 | 메일 */
+  /* 등록자 한 명을 한 줄로: 등록일시 | 소속 | 부서 | 이름 | 직급 | 전화번호 | 메일 */
   .admin-dashboard .admin-member-card {
-    grid-template-columns: 150px minmax(0, 1.3fr) minmax(80px, 0.8fr) minmax(0, 0.8fr) 140px minmax(0, 1.6fr);
+    grid-template-columns: 150px minmax(0, 1.3fr) minmax(0, 0.9fr) minmax(80px, 0.8fr) minmax(0, 0.8fr) 140px minmax(0, 1.6fr);
     align-items: center;
     gap: 0 24px;
     padding: 18px 28px;

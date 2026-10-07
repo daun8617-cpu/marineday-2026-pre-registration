@@ -13,6 +13,7 @@
   const phoneEl = document.getElementById('admin-info-phone');
   const emailEl = document.getElementById('admin-info-email');
   const orgEl = document.getElementById('admin-info-org');
+  const departmentEl = document.getElementById('admin-info-department');
   const positionEl = document.getElementById('admin-info-position');
   const createdEl = document.getElementById('admin-info-created');
   const checkinRowEl = document.getElementById('admin-info-checkin-row');
@@ -78,6 +79,7 @@
     phoneEl.textContent = record.phone;
     emailEl.textContent = record.email;
     orgEl.textContent = record.organization || '-';
+    departmentEl.textContent = record.department || '-';
     positionEl.textContent = record.position || '-';
     createdEl.textContent = formatDateTime(record.created_at);
 

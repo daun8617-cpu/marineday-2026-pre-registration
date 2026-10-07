@@ -194,9 +194,10 @@
 
     membersListEl.innerHTML = list
       .map((r) => {
-        // Column order: 등록일시, 소속, 이름, 직급, 전화번호, 메일
+        // Column order: 등록일시, 소속, 부서, 이름, 직급, 전화번호, 메일
         const date = `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`;
         const org = escapeHtml(r.organization || '-');
+        const department = escapeHtml(r.department || '-');
         const name = escapeHtml(r.name);
         const position = escapeHtml(r.position || '-');
         const phone = escapeHtml(r.phone);
@@ -205,6 +206,7 @@
           <a class="admin-member-card" href="admin-registrant-detail.html?id=${encodeURIComponent(r.id)}">
             <p class="admin-member-date">${date}</p>
             <p class="admin-member-org">${org}</p>
+            <p class="admin-member-department">${department}</p>
             <p class="admin-member-name">${name}</p>
             <p class="admin-member-position">${position}</p>
             <p class="admin-member-phone">${phone}</p>

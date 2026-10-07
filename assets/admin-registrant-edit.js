@@ -52,6 +52,7 @@
       phone: form.phone.value.trim(),
       email: form.email.value.trim(),
       org: form.org.value.trim(),
+      department: form.department.value.trim(),
       position: form.position.value.trim(),
     };
 
@@ -120,6 +121,7 @@
       form.phone.value = record.phone;
       form.email.value = record.email;
       form.org.value = record.organization || '';
+      form.department.value = record.department || '';
       form.position.value = record.position || '';
 
       form.hidden = false;

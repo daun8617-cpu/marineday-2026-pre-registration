@@ -2,7 +2,7 @@
    admin-login.css / admin-dashboard.css / admin-registrants.css 는 다른 관리자 페이지도 함께 쓰는 공용 파일이라 그대로 두고,
    body.admin-registrants 범위 안에서만 덮어쓴다. 관리자 페이지는 밝은 톤, 글꼴은 모두 Pretendard 다.
    기본값은 모바일(393px 기준, 좌우 24px, 카드형)이고 아래 미디어 쿼리가 PC(1024px 이상, 콘텐츠 최대 1200px, 표 형태) 레이아웃이다.
-   등록자 항목 순서는 대시보드와 같다: 등록일시, 소속, 이름, 직급, 전화번호, 메일. */
+   등록자 항목 순서는 대시보드와 같다: 등록일시, 소속, 부서, 이름, 직급, 전화번호, 메일. */
 
 .admin-registrants {
   /* admin-login.css 의 "PretendardVariable" 은 실제로 불러오는 글꼴 이름("Pretendard Variable")과 달라 적용되지 않는다 */
@@ -65,7 +65,7 @@
   padding: 16px 24px;
 }
 
-/* 등록일시 | 소속 / 이름 | 직급 / 전화번호 / 메일 / 체크인 상태 */
+/* 등록일시 | 소속 / 부서 / 이름 | 직급 / 전화번호 / 메일 / 체크인 상태 */
 .admin-registrants .admin-registrant-link {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -84,8 +84,14 @@
 }
 
 .admin-registrants .admin-registrant-org,
+.admin-registrants .admin-registrant-department,
 .admin-registrants .admin-registrant-position {
   text-align: right;
+}
+
+/* 부서는 소속 바로 아래 한 줄을 쓴다 */
+.admin-registrants .admin-registrant-department {
+  grid-column: 1 / -1;
 }
 
 .admin-registrants .admin-registrant-link .admin-registrant-org {
@@ -227,11 +233,11 @@
     padding: 14px 20px;
     background: #ffffff;
     font-size: 14px;
-    /* 1024~1279px: 두 줄 (윗줄: 소속·이름·직급 / 아랫줄: 전화번호·메일) */
-    grid-template-columns: 132px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.8fr) 76px 80px 126px;
+    /* 1024~1279px: 두 줄 (윗줄: 소속·부서·이름·직급 / 아랫줄: 전화번호·메일) */
+    grid-template-columns: 132px minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.8fr) 76px 80px 126px;
     grid-template-areas:
-      "date org   name  pos   reg checkin time"
-      "date phone email email reg checkin time";
+      "date org   dept  name  pos   reg checkin time"
+      "date phone phone email email reg checkin time";
     row-gap: 6px;
   }
 
@@ -255,6 +261,7 @@
 
   .admin-registrants .admin-registrant-date { grid-area: date; }
   .admin-registrants .admin-registrant-org { grid-area: org; }
+  .admin-registrants .admin-registrant-department { grid-area: dept; }
   .admin-registrants .admin-registrant-name { grid-area: name; }
   .admin-registrants .admin-registrant-position { grid-area: pos; }
   .admin-registrants .admin-registrant-phone { grid-area: phone; }
@@ -308,8 +315,8 @@
 @media (min-width: 1280px) {
   .admin-registrants .admin-registrants-head,
   .admin-registrants .admin-registrant-card {
-    grid-template-columns: 132px minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.9fr) 120px minmax(0, 1.8fr) 76px 80px 126px;
-    grid-template-areas: "date org name pos phone email reg checkin time";
+    grid-template-columns: 132px minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 0.9fr) 120px minmax(0, 1.8fr) 76px 80px 126px;
+    grid-template-areas: "date org dept name pos phone email reg checkin time";
   }
 
   .admin-registrants .admin-registrants-head {
