@@ -11,6 +11,14 @@
   const READER_ID = 'admin-checkin-reader';
 
   const RESCAN_LOCK_MS = 3000;
+  // Venue Wi-Fi can stall without failing, so nothing here waits forever: the
+  // check-in request and each session lookup/refresh give up after these.
+  const CHECKIN_TIMEOUT_MS = 10000;
+  const AUTH_TIMEOUT_MS = 8000;
+  // How long a request whose outcome was never seen is remembered, and how far
+  // the device clock may run ahead of the server's when matching it later.
+  const UNCONFIRMED_WINDOW_MS = 5 * 60 * 1000;
+  const CLOCK_SKEW_ALLOWANCE_MS = 60 * 1000;
   const CAMERA_STORAGE_KEY = 'md-admin-checkin-camera-id';
   const SCAN_CONFIG = { fps: 10, qrbox: 250 };
 
@@ -18,6 +26,10 @@
   let scanning = false;
   let startLock = null; // Promise of the in-flight startCamera() call, or null when idle
   let busy = false;
+  let pendingToken = null; // QR token of the request in flight, or null when idle
+  let busyNoticeShown = false;
+  let sessionIdentity = null; // what the server records as checked_in_by for this login
+  let unconfirmed = null; // { qrToken, at } of the last request whose outcome was never seen
   let lastDecodedText = null;
   let lastDecodedAt = 0;
 
@@ -110,8 +122,23 @@
 
   function tokenFrom(result) {
     const session = result && result.data && result.data.session;
-    if (session && session.access_token) return session.access_token;
+    if (session && session.access_token) {
+      // Same value the server stores in checked_in_by (email, else user id).
+      sessionIdentity = (session.user && (session.user.email || session.user.id)) || null;
+      return session.access_token;
+    }
     throw authFailure(isAuthNetworkError(result && result.error) ? 'network' : 'expired');
+  }
+
+  // Settles like `promise`, unless it takes longer than `ms`. The underlying
+  // call cannot be cancelled, so it is left to finish and its result dropped.
+  function withTimeout(promise, ms, makeError) {
+    let timer;
+    const timeout = new Promise((resolve, reject) => {
+      timer = setTimeout(() => reject(makeError()), ms);
+    });
+    promise.catch(() => {});
+    return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
   }
 
   // The access token is read from the Supabase session right before every
@@ -119,22 +146,78 @@
   // stored session and refreshes it first when it is about to expire, so a
   // check-in page left open (or a phone left locked) for hours keeps working.
   async function currentAccessToken() {
-    return tokenFrom(await client.auth.getSession());
+    return tokenFrom(await withTimeout(client.auth.getSession(), AUTH_TIMEOUT_MS, () => authFailure('timeout')));
   }
 
   async function refreshedAccessToken() {
-    return tokenFrom(await client.auth.refreshSession());
+    return tokenFrom(await withTimeout(client.auth.refreshSession(), AUTH_TIMEOUT_MS, () => authFailure('timeout')));
   }
 
-  function postCheckin(qrToken, token) {
-    return fetch('/api/admin-checkin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ qr_token: qrToken }),
-    });
+  // The request was sent but no usable answer came back (timed out, connection
+  // dropped, reply cut off). The server may or may not have checked the person
+  // in, so this must never be reported as a plain failure.
+  function outcomeUnknown() {
+    const err = new Error('outcome unknown');
+    err.outcomeUnknown = true;
+    return err;
+  }
+
+  // Resolves to { status, ok, body } once the whole reply has been read.
+  async function postCheckin(qrToken, token) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), CHECKIN_TIMEOUT_MS);
+    try {
+      const res = await fetch('/api/admin-checkin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ qr_token: qrToken }),
+        signal: controller.signal,
+      });
+      const responseBody = await res.json().catch(() => null);
+      // A success status without a readable body tells us nothing about who
+      // was checked in, so it counts as unknown too.
+      if (controller.signal.aborted || (res.ok && !responseBody)) throw outcomeUnknown();
+      return { status: res.status, ok: res.ok, body: responseBody || {} };
+    } catch (err) {
+      throw outcomeUnknown();
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  function showPending(notice) {
+    showResult('pending notfound', '체크인 처리 중', null, notice || '잠시만 기다려 주세요.');
+  }
+
+  function showOutcomeUnknown() {
+    showResult(
+      'unknown dup',
+      '처리 결과 미확인',
+      null,
+      '처리 결과를 확인하지 못했습니다. 네트워크 연결을 확인하고 같은 QR을 다시 조회해 주세요.'
+    );
+  }
+
+  // Another QR arrived while one is still being processed. The camera reports
+  // codes many times a second, so the notice is written once per request.
+  function notifyBusy() {
+    if (busyNoticeShown) return;
+    busyNoticeShown = true;
+    showPending('앞선 QR을 처리하고 있습니다. 결과가 표시된 뒤 다시 스캔해 주세요.');
+  }
+
+  // True when "already checked in" is really the answer to our own earlier
+  // request for this QR whose reply never arrived: same code, recorded under
+  // this login, at about the time we sent it.
+  function confirmsEarlierAttempt(qrToken, responseBody) {
+    if (!unconfirmed || unconfirmed.qrToken !== qrToken) return false;
+    if (Date.now() - unconfirmed.at > UNCONFIRMED_WINDOW_MS) return false;
+    const checkedInAt = new Date(responseBody.checked_in_at).getTime();
+    if (Number.isNaN(checkedInAt) || checkedInAt < unconfirmed.at - CLOCK_SKEW_ALLOWANCE_MS) return false;
+    return Boolean(sessionIdentity) && responseBody.checked_in_by === sessionIdentity;
   }
 
   function showLoginRequired() {
@@ -147,8 +230,18 @@
   }
 
   async function submitToken(qrToken) {
-    if (busy || !qrToken) return;
+    if (!qrToken) return;
+    if (busy) {
+      notifyBusy();
+      return;
+    }
     busy = true;
+    pendingToken = qrToken;
+    busyNoticeShown = false;
+    const startedAt = Date.now();
+    // Replaces the previous attendee's result at once, so a slow request can
+    // never be mistaken for the result still on screen.
+    showPending();
     try {
       let res = await postCheckin(qrToken, await currentAccessToken());
 
@@ -162,7 +255,7 @@
         if (res.status === 401) throw authFailure('expired');
       }
 
-      const responseBody = await res.json().catch(() => ({}));
+      const responseBody = res.body;
 
       if (res.status === 404) {
         showResult('notfound', '등록되지 않은 QR', null, '사전등록 정보를 찾을 수 없습니다.');
@@ -174,29 +267,51 @@
         return;
       }
 
-      if (responseBody.already) {
-        showResult('dup', '이미 체크인됨', escapeHtml(responseBody.name), checkinSubText(responseBody));
-      } else {
+      if (!responseBody.already) {
         showResult('ok', '체크인 성공', escapeHtml(responseBody.name), checkinSubText(responseBody));
+      } else if (confirmsEarlierAttempt(qrToken, responseBody)) {
+        showResult(
+          'ok',
+          '체크인 완료',
+          escapeHtml(responseBody.name),
+          [checkinSubText(responseBody), '앞선 요청이 정상 처리된 것을 확인했습니다.'].filter(Boolean).join(' · ')
+        );
+      } else {
+        showResult('dup', '이미 체크인됨', escapeHtml(responseBody.name), checkinSubText(responseBody));
       }
+      if (unconfirmed && unconfirmed.qrToken === qrToken) unconfirmed = null;
       // Camera keeps running so the next attendee's QR can be scanned right away.
     } catch (err) {
       if (err && err.authFailure === 'expired') {
         showLoginRequired();
       } else if (err && err.authFailure === 'network') {
         showResult('err', '체크인 실패', null, '네트워크 연결을 확인한 뒤 다시 시도해 주세요.');
+      } else if (err && (err.outcomeUnknown || err.authFailure === 'timeout')) {
+        // Only a request that was actually sent can have checked someone in.
+        if (err.outcomeUnknown) unconfirmed = { qrToken, at: startedAt };
+        showOutcomeUnknown();
       } else {
         showResult('err', '체크인 실패', null, err.message || '네트워크 오류');
       }
     } finally {
       busy = false;
+      pendingToken = null;
+      // Count the rescan cooldown from the moment the result appears, so a QR
+      // still in front of the camera is not resubmitted the instant a slow
+      // request ends.
+      if (lastDecodedText === qrToken) lastDecodedAt = Date.now();
     }
   }
 
   function onScanSuccess(decodedText) {
     const text = decodedText.trim();
     const now = Date.now();
-    if (busy) return;
+    if (busy) {
+      // The camera keeps reporting the code being processed; only a different
+      // one is worth telling the operator about.
+      if (text !== pendingToken) notifyBusy();
+      return;
+    }
     // Same code scanned again inside the cooldown window: ignore (camera
     // keeps firing on whatever QR is still in frame). A different code, or
     // the same code after the cooldown, is processed immediately.
