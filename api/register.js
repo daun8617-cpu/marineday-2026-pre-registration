@@ -1,6 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const crypto = require('crypto');
-const { normalizePhone } = require('../lib/phone');
+const { normalizePhone, isActivePhoneConflict } = require('../lib/phone');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -89,6 +89,15 @@ module.exports = async function handler(req, res) {
     if (error.code !== '23505' || !error.message?.includes(QR_TOKEN_UNIQUE_CONSTRAINT)) {
       break;
     }
+  }
+
+  // A concurrent request with the same number got in between the duplicate
+  // check above and this insert; answer exactly like that check does.
+  if (isActivePhoneConflict(error)) {
+    return res.status(409).json({
+      error: '이미 사전등록이 완료된 전화번호입니다.',
+      duplicate: true,
+    });
   }
 
   console.error('Supabase insert error:', error);

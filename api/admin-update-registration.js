@@ -1,5 +1,6 @@
 const { createClient } = require('@supabase/supabase-js');
 const { ROLE_ADMIN, requireRole } = require('../lib/admin-auth');
+const { isActivePhoneConflict } = require('../lib/phone');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -54,6 +55,10 @@ module.exports = async function handler(req, res) {
     .maybeSingle();
 
   if (error) {
+    // The new number already belongs to another active registration.
+    if (isActivePhoneConflict(error)) {
+      return res.status(409).json({ error: '이미 다른 등록자가 사용 중인 전화번호입니다.' });
+    }
     console.error('Supabase admin update error:', error);
     return res.status(500).json({ error: '수정 처리 중 오류가 발생했습니다.' });
   }
