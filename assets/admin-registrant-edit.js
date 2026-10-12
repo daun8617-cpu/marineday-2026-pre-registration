@@ -11,6 +11,7 @@
 
   let accessToken = null;
   let registrantId = null;
+  let role = null;
 
   async function loadRegistrations() {
     const res = await fetch('/api/admin-registrations', {
@@ -20,6 +21,7 @@
     if (!res.ok) {
       throw new Error(json.error || '데이터를 불러오지 못했습니다.');
     }
+    role = json.role;
     return json.registrations;
   }
 
@@ -105,6 +107,11 @@
 
     try {
       const registrations = await loadRegistrations();
+      if (role !== 'admin') {
+        errorEl.textContent = '수정 권한이 없습니다.';
+        errorEl.hidden = false;
+        return;
+      }
       const record = registrations.find((r) => r.id === registrantId);
       if (!record) {
         errorEl.textContent = '해당 등록자를 찾을 수 없습니다.';

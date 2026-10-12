@@ -27,9 +27,11 @@
   const deleteBtn = document.getElementById('admin-btn-delete');
   const deleteBtnLabel = document.getElementById('admin-btn-delete-label');
   const editBtn = document.getElementById('admin-btn-edit');
+  const bottomBarEl = deleteBtn.parentElement;
 
   let accessToken = null;
   let record = null;
+  let role = null;
   let confirmingDelete = false;
 
   function kstCalendarDate(dateInput) {
@@ -99,6 +101,9 @@
     checkinTagEl.classList.toggle('done', !!record.checked_in);
     deleteBtn.disabled = cancelled;
     deleteBtnLabel.textContent = cancelled ? '취소됨' : '등록취소';
+    // Only admins may edit or cancel; viewers get no action buttons (the
+    // server rejects those calls for them as well).
+    bottomBarEl.hidden = role !== 'admin';
 
     const qrUrl = AdminQrLink.urlFor(record);
     qrCardEl.hidden = !qrUrl;
@@ -168,6 +173,7 @@
     if (!res.ok) {
       throw new Error(json.error || '데이터를 불러오지 못했습니다.');
     }
+    role = json.role;
     return json.registrations;
   }
 

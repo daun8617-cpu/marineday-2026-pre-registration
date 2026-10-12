@@ -1,4 +1,5 @@
 const { createClient } = require('@supabase/supabase-js');
+const { ROLE_ADMIN, ROLE_VIEWER, requireRole } = require('../lib/admin-auth');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -11,18 +12,8 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const authHeader = req.headers.authorization || '';
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null;
-
-  if (!token) {
-    return res.status(401).json({ error: '인증이 필요합니다.' });
-  }
-
-  const { data: userData, error: authError } = await supabase.auth.getUser(token);
-
-  if (authError || !userData.user) {
-    return res.status(401).json({ error: '인증이 만료되었습니다. 다시 로그인해 주세요.' });
-  }
+  const auth = await requireRole(req, res, supabase, [ROLE_ADMIN, ROLE_VIEWER]);
+  if (!auth) return;
 
   const { data, error } = await supabase
     .from('registrations')
@@ -34,5 +25,5 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: '조회 중 오류가 발생했습니다.' });
   }
 
-  return res.status(200).json({ ok: true, registrations: data });
+  return res.status(200).json({ ok: true, role: auth.role, registrations: data });
 };
