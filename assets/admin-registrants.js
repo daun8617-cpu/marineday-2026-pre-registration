@@ -226,9 +226,45 @@
     renderList();
   });
 
+  // Excel runs a cell as a formula when its text begins with = + - or @ (the
+  // full-width forms U+FF1D, U+FF0B, U+FF0D and U+FF20 included), so a value
+  // typed into the public form could execute on the PC of whoever opens the
+  // export, and an ordinary one such as "-영업팀" would show up as #NAME?.
+  // Values that start with one of those characters — also behind leading
+  // blanks, which some spreadsheet apps strip — or with a tab or line break
+  // get an apostrophe in front: the text stays readable and is no longer
+  // evaluated.
+  function neutralizeFormula(str) {
+    return /^[\t\r\n]|^\s*[=+\-@\uFF1D\uFF0B\uFF0D\uFF20]/.test(str) ? `'${str}` : str;
+  }
+
+  // Bare digits ("01012345678") are read by Excel as a number and lose the
+  // leading 0, so phone numbers are exported in the usual hyphenated form,
+  // which Excel keeps as text. Only the exported text changes; the stored
+  // value is untouched, and stripping the non-digits from the exported text
+  // always gives back the stored digits. A number of an unexpected length is
+  // exported as entered behind an apostrophe, so it can neither lose digits
+  // nor be read as a number, a date or a formula.
+  function formatPhoneForCsv(phone) {
+    const raw = String(phone == null ? '' : phone);
+    const digits = raw.replace(/\D/g, '');
+    if (digits.length === 11) {
+      return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`;
+    }
+    if (digits.length === 10) {
+      return digits.startsWith('02')
+        ? `${digits.slice(0, 2)}-${digits.slice(2, 6)}-${digits.slice(6)}`
+        : `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
+    if (digits.length === 9 && digits.startsWith('02')) {
+      return `${digits.slice(0, 2)}-${digits.slice(2, 5)}-${digits.slice(5)}`;
+    }
+    return raw === '' ? '' : `'${raw}`;
+  }
+
   function toCsvValue(value) {
-    const str = String(value == null ? '' : value);
-    if (/[",\n]/.test(str)) {
+    const str = neutralizeFormula(String(value == null ? '' : value));
+    if (/[",\r\n]/.test(str)) {
       return `"${str.replace(/"/g, '""')}"`;
     }
     return str;
@@ -243,7 +279,7 @@
     const rows = filtered.map((r) => [
       `${formatDotDate(kstCalendarDate(r.created_at))} ${formatKstTime(r.created_at)}`,
       r.name,
-      r.phone,
+      formatPhoneForCsv(r.phone),
       r.email,
       r.organization || '',
       r.department || '',
