@@ -14,7 +14,6 @@
   const CAMERA_STORAGE_KEY = 'md-admin-checkin-camera-id';
   const SCAN_CONFIG = { fps: 10, qrbox: 250 };
 
-  let accessToken = null;
   let html5Qrcode = null;
   let scanning = false;
   let startLock = null; // Promise of the in-flight startCamera() call, or null when idle
@@ -93,18 +92,76 @@
     }
   }
 
+  // Two ways of failing to get a usable token, kept apart because staff need
+  // different instructions: 'expired' means logging in again is the only way
+  // forward, 'network' means the session is probably fine and the request to
+  // refresh it simply did not get through.
+  function authFailure(kind) {
+    const err = new Error(kind);
+    err.authFailure = kind;
+    return err;
+  }
+
+  // supabase-js reports an unreachable or overloaded auth server with this
+  // error class; anything else (e.g. a revoked refresh token) is final.
+  function isAuthNetworkError(error) {
+    return Boolean(error) && error.name === 'AuthRetryableFetchError';
+  }
+
+  function tokenFrom(result) {
+    const session = result && result.data && result.data.session;
+    if (session && session.access_token) return session.access_token;
+    throw authFailure(isAuthNetworkError(result && result.error) ? 'network' : 'expired');
+  }
+
+  // The access token is read from the Supabase session right before every
+  // request instead of being kept in a variable. getSession() returns the
+  // stored session and refreshes it first when it is about to expire, so a
+  // check-in page left open (or a phone left locked) for hours keeps working.
+  async function currentAccessToken() {
+    return tokenFrom(await client.auth.getSession());
+  }
+
+  async function refreshedAccessToken() {
+    return tokenFrom(await client.auth.refreshSession());
+  }
+
+  function postCheckin(qrToken, token) {
+    return fetch('/api/admin-checkin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ qr_token: qrToken }),
+    });
+  }
+
+  function showLoginRequired() {
+    showResult(
+      'err',
+      '로그인이 만료되었습니다',
+      null,
+      '다시 로그인한 뒤 체크인을 계속해 주세요. <a href="admin-login.html">다시 로그인</a>'
+    );
+  }
+
   async function submitToken(qrToken) {
     if (busy || !qrToken) return;
     busy = true;
     try {
-      const res = await fetch('/api/admin-checkin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({ qr_token: qrToken }),
-      });
+      let res = await postCheckin(qrToken, await currentAccessToken());
+
+      // 401 = the server rejected the token (it expired or was revoked after
+      // we read it). Force one refresh and try exactly once more: the server
+      // answers 401 before touching any data and check-in is idempotent, so
+      // repeating the request cannot check anyone in twice. 403 and every
+      // other status are final and are never retried.
+      if (res.status === 401) {
+        res = await postCheckin(qrToken, await refreshedAccessToken());
+        if (res.status === 401) throw authFailure('expired');
+      }
+
       const responseBody = await res.json().catch(() => ({}));
 
       if (res.status === 404) {
@@ -124,7 +181,13 @@
       }
       // Camera keeps running so the next attendee's QR can be scanned right away.
     } catch (err) {
-      showResult('err', '체크인 실패', null, err.message || '네트워크 오류');
+      if (err && err.authFailure === 'expired') {
+        showLoginRequired();
+      } else if (err && err.authFailure === 'network') {
+        showResult('err', '체크인 실패', null, '네트워크 연결을 확인한 뒤 다시 시도해 주세요.');
+      } else {
+        showResult('err', '체크인 실패', null, err.message || '네트워크 오류');
+      }
     } finally {
       busy = false;
     }
@@ -365,7 +428,6 @@
       window.location.href = 'admin-login.html';
       return;
     }
-    accessToken = data.session.access_token;
     page.hidden = false;
     body.hidden = false;
     startCamera();
